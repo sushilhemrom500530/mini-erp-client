@@ -2,6 +2,7 @@ import { Navigate } from "react-router-dom";
 import Login from "../../view/auth/login/index.js";
 import SignUp from "../../view/auth/signup/index.js";
 import AuthLayout from "../../layout/auth/index.js";
+import ForgotPassword from "../../view/auth/forgot-password/index.js";
 
 const authRoutes = [
     {
@@ -20,10 +21,10 @@ const authRoutes = [
                 path: "register",
                 element: <SignUp />
             },
-            // {
-            //     path: "forgot-password",
-            //     element: <ForgotPassword/>
-            // }
+            {
+                path: "forgot-password",
+                element: <ForgotPassword />
+            }
         ]
     }
 ]
