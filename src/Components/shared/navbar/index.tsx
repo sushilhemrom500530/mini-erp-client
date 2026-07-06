@@ -3,47 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { ChevronDown, X } from "lucide-react";
 import { RiMenu3Fill } from "react-icons/ri";
 import Logo from "../logo/index.js";
+import { navLinks, type MenuItem } from "../../../data/menu-items/index.js";
 
-interface NavLink {
-  label: string;
-  href?: string;
-  submenu?: {
-    label: string;
-    href: string;
-  }[];
-}
-
-const navLinks: NavLink[] = [
-  {
-    label: "About Us",
-    href: "/about-us",
-  },
-  {
-    label: "Orbit Export",
-    href: "/orbit-export",
-  },
-  {
-    label: "Orbit Import",
-    href: "/orbit-import",
-  },
-  {
-    label: "Business Connect",
-    submenu: [
-      {
-        label: "Connect to Partners",
-        href: "/business-connect/partners",
-      },
-      {
-        label: "KIMVUKA",
-        href: "/business-connect/kimvuka",
-      },
-    ],
-  },
-  {
-    label: "Contact Us",
-    href: "/contact-us",
-  },
-];
 
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -107,7 +68,7 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((item) =>
+            {navLinks.map((item: MenuItem) =>
               item.submenu ? (
                 <div key={item.label} className="relative group">
                   <button className="flex items-center gap-1 text-sm font-medium text-white/90 hover:text-light-primary transition-colors cursor-pointer">
@@ -184,7 +145,7 @@ const Navbar = () => {
       <div className="fixed inset-0 z-[999] overflow-x-hidden pointer-events-none lg:hidden">
         <aside
           onClick={(e) => e.stopPropagation()}
-          className={`pointer-events-auto absolute top-0 right-0 w-72 h-full bg-primary text-white shadow-xl transition-transform duration-300
+          className={`pointer-events-auto absolute top-0 right-0 w-72 h-full bg-white shadow-xl transition-transform duration-300
           ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
         >
           <div className="flex items-center justify-between py-4 px-5 border-b border-white/10">
@@ -198,108 +159,61 @@ const Navbar = () => {
             </button>
           </div>
 
-          <div className="flex flex-col p-5 gap-2">            {navLinks.map((item) =>
-            item.submenu ? (
-              <div key={item.label}>
-                <button
-                  onClick={() =>
-                    setOpenSubmenu((prev) =>
-                      prev === item.label ? null : item.label
-                    )
-                  }
-                  className="flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-white/90 hover:bg-white/5 transition-colors"
-                >
-                  {item.label}
+          <div className="flex flex-col p-5 gap-2">
+            {navLinks.map((item: MenuItem) =>
+              item.submenu ? (
+                <div key={item.label}>
+                  <button
+                    onClick={() =>
+                      setOpenSubmenu((prev) =>
+                        prev === item.label ? null : item.label
+                      )
+                    }
+                    className="flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-base font-medium text-black/90 hover:text-secondary transition-colors cursor-pointer"
+                  >
+                    {item.label}
 
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform ${openSubmenu === item.label ? "rotate-180" : ""
-                      }`}
-                  />
-                </button>
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${openSubmenu === item.label ? "rotate-180" : ""
+                        }`}
+                    />
+                  </button>
 
-                {openSubmenu === item.label && (
-                  <div className="ml-3 mt-1 flex flex-col border-l border-white/10">
-                    {item.submenu.map((sub) => (
-                      <Link
-                        key={sub.label}
-                        to={sub.href}
-                        onClick={() => setMenuOpen(false)}
-                        className="px-4 py-2 text-sm text-white/70 hover:text-light-primary transition-colors"
-                      >
-                        {sub.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : item.label === "Contact Us" ? (
-              <button
-                key={item.label}
-                onClick={() => {
-                  setMenuOpen(false);
-                  setContactOpen(true);
-                }}
-                className="px-3 py-2.5 rounded-lg text-left text-sm font-medium text-white/90 hover:bg-white/5 transition-colors"
-              >
-                {item.label}
-              </button>
-            ) : (
-              <Link
-                key={item.label}
-                to={item.href!}
-                onClick={() => setMenuOpen(false)}
-                className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive(item.href)
-                  ? "text-light-primary bg-white/5"
-                  : "text-white/90 hover:bg-white/5"
-                  }`}
-              >
-                {item.label}
-              </Link>
-            )
-          )}
-
-            {/* Language Toggle */}
-            <div className="mt-3 flex items-center rounded-full border border-white/40 overflow-hidden text-xs font-semibold w-max">
-              {(["EN", "FR"] as const).map((l) => (
-                <button
-                  key={l}
-                  onClick={() => setLang(l)}
-                  className={`px-4 py-1.5 transition-colors ${lang === l
-                    ? "bg-light-primary text-primary"
-                    : "text-white/80 hover:text-white"
+                  {openSubmenu === item.label && (
+                    <div className="ml-3 mt-1 flex flex-col border-l border-white/10">
+                      {item.submenu.map((sub) => (
+                        <Link
+                          key={sub.label}
+                          to={sub.href}
+                          onClick={() => setMenuOpen(false)}
+                          className="px-4 py-2 text-sm  text-black/90 transition-colors"
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={item.label}
+                  to={item.href!}
+                  onClick={() => setMenuOpen(false)}
+                  className={`px-3 py-2.5 rounded-lg text-base font-medium transition-colors hover:text-secondary ${isActive(item.href)
+                    ? "text-secondary"
+                    : "text-black/90 "
                     }`}
                 >
-                  {l}
-                </button>
-              ))}
-            </div>
+                  {item.label}
+                </Link>
+              )
+            )}
           </div>
         </aside>
       </div>
 
       {/* Placeholder during initial render */}
       {!mounted && <span className="hidden" />}
-
-      {/* Contact Drawer */}
-
-      {/* Uncomment if you're using Ant Design Drawer */}
-
-      {/*
-      <Drawer
-        open={contactOpen}
-        onClose={() => setContactOpen(false)}
-        placement="right"
-        size={460}
-        rootClassName="contact-modal"
-        title={
-          <span className="text-2xl font-bold text-slate-900">
-            Contact Now
-          </span>
-        }
-      >
-        <ContactUsForm setContactOpen={setContactOpen} />
-      </Drawer>
-      */}
     </>
   );
 };

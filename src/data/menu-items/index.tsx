@@ -246,29 +246,16 @@ export const logisticPartnerMenuData: MenuData = {
 
 export const navLinks: MenuItem[] = [
   {
+    label: "Products",
+    href: "/products",
+  },
+  {
+    label: "Services",
+    href: "/services",
+  },
+  {
     label: "About Us",
     href: "/about-us",
-  },
-  {
-    label: "Orbit Export",
-    href: "/orbit-export",
-  },
-  {
-    label: "Orbit Import",
-    href: "/orbit-import",
-  },
-  {
-    label: "Business Connect",
-    submenu: [
-      {
-        label: "Connect to Partners",
-        href: "/business-connect/partners",
-      },
-      {
-        label: "KIMVUKA",
-        href: "/business-connect/kimvuka",
-      },
-    ],
   },
   {
     label: "Contact Us",
