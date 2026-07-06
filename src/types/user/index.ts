@@ -66,6 +66,7 @@ export interface IRegisterRequest {
     dateOfBirth: string;
     phone: string;
     gender?: string;
+    role?: UserRole;
 }
 
 export interface IRegisterData {
@@ -120,3 +121,20 @@ export interface IChangePasswordRequest {
 }
 
 export type IChangePasswordResponse = IApiResponse<null>;
+
+export interface IAuthPayload {
+    user: IUser;
+    token: string;
+}
+
+export interface IInitialState {
+    user: IUser | null;
+    token: string | null;
+    isAuthenticated: boolean;
+}
+
+export const initialState: IInitialState = {
+    user: null,
+    token: null,
+    isAuthenticated: false,
+};
