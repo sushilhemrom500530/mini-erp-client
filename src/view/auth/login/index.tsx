@@ -1,8 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
 import { useForm } from 'react-hook-form';
-import useApi from "../../../hooks/auth/useApi.js";
-
 
 export default function Login() {
     const location = useLocation();

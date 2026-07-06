@@ -1,13 +1,12 @@
 import { Navigate } from "react-router-dom";
-import MainLayout from "../../layout/main/index.js";
 import Login from "../../view/auth/login/index.js";
 import SignUp from "../../view/auth/signup/index.js";
-// import ForgotPassword from '../../Pages/';
+import AuthLayout from "../../layout/auth/index.js";
 
 const authRoutes = [
     {
         path: "/auth/",
-        element: <MainLayout />,
+        element: <AuthLayout />,
         children: [
             {
                 path: "",

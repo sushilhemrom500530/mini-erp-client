@@ -54,8 +54,8 @@ const Navbar = () => {
   const navContainerClass = `
     sticky inset-0 w-full z-50 transition-all duration-300
     ${isScrolled
-      ? "bg-primary/90 backdrop-blur-md shadow-md py-3"
-      : "bg-primary py-4"
+      ? "bg-white/90 backdrop-blur-md shadow-md py-3"
+      : "bg-white/90 py-4"
     }
   `;
 
@@ -71,7 +71,7 @@ const Navbar = () => {
             {navLinks.map((item: MenuItem) =>
               item.submenu ? (
                 <div key={item.label} className="relative group">
-                  <button className="flex items-center gap-1 text-sm font-medium text-white/90 hover:text-light-primary transition-colors cursor-pointer">
+                  <button className="flex items-center gap-1 text-base font-medium text-black/90 hover:text-secondary transition-colors cursor-pointer">
                     {item.label}
 
                     <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
@@ -83,7 +83,7 @@ const Navbar = () => {
                         <Link
                           key={sub.label}
                           to={sub.href}
-                          className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-primary transition-colors"
+                          className="block px-4 py-2.5 text-sm font-medium text-black/90 hover:text-secondary transition-colors"
                         >
                           {sub.label}
                         </Link>
@@ -91,21 +91,13 @@ const Navbar = () => {
                     </div>
                   </div>
                 </div>
-              ) : item.label === "Contact Us" ? (
-                <button
-                  key={item.label}
-                  onClick={() => setContactOpen(true)}
-                  className="text-sm font-medium text-white/90 hover:text-light-primary transition-colors cursor-pointer"
-                >
-                  {item.label}
-                </button>
               ) : (
                 <Link
                   key={item.label}
                   to={item.href!}
-                  className={`text-sm font-medium transition-colors ${isActive(item.href)
-                    ? "text-light-primary"
-                    : "text-white/90 hover:text-light-primary"
+                  className={`text-base font-medium transition-colors ${isActive(item.href)
+                    ? "text-secondary"
+                    : "text-black/90 hover:text-secondary"
                     }`}
                 >
                   {item.label}
@@ -117,13 +109,13 @@ const Navbar = () => {
           {/* Right Side */}
           <div className="flex items-center gap-4">
             <Link to="/auth/login">
-              <button className="font-semibold text-sm px-6 py-2 rounded-full bg-light-primary hover:bg-light-secondary text-white transition-colors cursor-pointer">
+              <button className="font-medium text-sm px-6 py-2 rounded-full bg-secondary hover:bg-primary text-white transition-colors cursor-pointer">
                 Sign In
               </button>
             </Link>
 
             <button
-              className="lg:hidden text-white flex items-center justify-center"
+              className="lg:hidden text-black/90 hover:text-secondary transition-colors flex items-center justify-center cursor-pointer"
               onClick={toggleMenu}
               aria-label="Open Menu"
             >
@@ -153,7 +145,7 @@ const Navbar = () => {
 
             <button
               onClick={toggleMenu}
-              className="text-white/70 hover:text-white"
+              className="text-black/90 hover:text-secondary transition-colors cursor-pointer"
             >
               <X className="w-8 h-8 border border-white/20 rounded-full p-1.5" />
             </button>
