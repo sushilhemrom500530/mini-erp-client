@@ -3,11 +3,10 @@ import MainLayout from "../layout/main/index.js";
 import Index from "../view/error-page/index.js";
 import authRoutes from "./auth/index.js";
 import adminRoutes from './admin/index.jsx';
-import userRoutes from './user/index.js';
+import userRoutes from './employee/index.js';
 import HomePage from "../view/home/index.js";
 
 const routes = [
-
     // common home page route 
     {
         path: "/",
