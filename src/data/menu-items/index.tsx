@@ -30,7 +30,7 @@ export interface SubmenuItem {
 export interface MenuItem {
   label: string;
   href?: string;
-  icon: React.ElementType;
+  icon?: React.ElementType;
   submenu?: SubmenuItem[];
 }
 
@@ -243,25 +243,35 @@ export const logisticPartnerMenuData: MenuData = {
   ],
 };
 
-export const navItems: MenuItem[] = [
+
+export const navLinks: MenuItem[] = [
   {
-    label: "Events",
-    href: "/events",
-    icon: CalendarDays,
+    label: "About Us",
+    href: "/about-us",
   },
   {
-    label: "Sports",
-    href: "/events?category=sports",
-    icon: Ticket,
+    label: "Orbit Export",
+    href: "/orbit-export",
   },
   {
-    label: "Music",
-    href: "/events?category=music",
-    icon: Heart,
+    label: "Orbit Import",
+    href: "/orbit-import",
   },
   {
-    label: "Shows",
-    href: "/events?category=shows",
-    icon: Bell,
+    label: "Business Connect",
+    submenu: [
+      {
+        label: "Connect to Partners",
+        href: "/business-connect/partners",
+      },
+      {
+        label: "KIMVUKA",
+        href: "/business-connect/kimvuka",
+      },
+    ],
+  },
+  {
+    label: "Contact Us",
+    href: "/contact-us",
   },
 ];
