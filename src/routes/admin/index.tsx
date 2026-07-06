@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
-import DashbaordLayout from "../../layout/dashboard/index.jsx";
+import DashboardLayout from "../../layout/dashboard/index.jsx";
 
 const adminRoutes = [
     {
         path: "/admin/",
-        element: <DashbaordLayout />,
+        element: <DashboardLayout />,
         children: [
             {
                 path: "",

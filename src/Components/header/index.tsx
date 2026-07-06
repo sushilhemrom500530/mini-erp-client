@@ -1,7 +1,6 @@
 "use client";
-import user_icon from "../../assets/user.svg";
 import { IoMdMenu } from "react-icons/io";
-import { FiShoppingCart } from "react-icons/fi";
+import { BsBellFill } from "react-icons/bs";
 
 export default function Header({ navOpened, setNavOpened }: any) {
     return (
@@ -17,12 +16,6 @@ export default function Header({ navOpened, setNavOpened }: any) {
                     </div>
 
                     <div />
-                    {/* <div className="hidden md:block text-black">
-            <h1 className="text-base md:text-xl lg:text-3xl font-semibold ">
-              Welcome,TP
-            </h1>
-            <p className="text-sm font-normal">Have a nice day</p>
-          </div> */}
                     <div className="flex items-center justify-center gap-x-5">
                         <div
                             onClick={() => setNavOpened(!navOpened)}
@@ -34,11 +27,11 @@ export default function Header({ navOpened, setNavOpened }: any) {
                             <h3 className="absolute -top-4 -right-3 bg-[#10B981] rounded-full w-5 h-5 flex items-center justify-center text-xs text-white">
                                 2
                             </h3>
-                            <FiShoppingCart size={22} color="#000" />
+                            <BsBellFill size={22} color="#000" />
                         </div>
                         <div className="flex w-10 md:w-14 xl:w-auto flex-1 items-center gap-2 cursor-pointer">
                             <img
-                                src={user_icon}
+                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQna96LOHsB0K43Ybx1vGQyqq4IKX9k_1xW_am2qdgT-Q&s"
                                 alt="logo"
                                 className="w-9 h-9 rounded-full "
                             />

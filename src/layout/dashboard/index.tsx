@@ -1,10 +1,9 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../../Components/header/sidebar/index.js";
+import Header from "../../Components/header/index.js";
 
-interface DashboardLayoutProps {
-    children: ReactNode;
-}
-
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default function DashboardLayout() {
     const [navOpened, setNavOpened] = useState<boolean>(false);
     return (
         <div className="flex min-h-screen h-full">
@@ -18,7 +17,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 <Header navOpened={navOpened} setNavOpened={setNavOpened} />
                 {/* min-h-[calc(100vh-48px)]  */}
                 <main className="overflow-y-auto overflow-x-hidden w-full min-h-[calc(100vh-178px)] h-full bg-[#F4F5F8] font-primary  pr-3">
-                    {children}
+                    <Outlet />
                 </main>
             </div>
         </div>

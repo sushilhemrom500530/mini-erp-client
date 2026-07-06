@@ -1,121 +1,267 @@
-import { FaUser } from "react-icons/fa";
-import { MdReport, MdSentimentSatisfied, MdSettings, MdSupport } from "react-icons/md";
+import {
+  LayoutDashboard,
+  Ticket,
+  CalendarDays,
+  Heart,
+  CreditCard,
+  Bell,
+  User,
+  Settings,
+  UserRound,
+  ShieldAlert,
+  Info,
+  CircleQuestionMark,
+  Users,
+  ShieldCheck,
+  BarChart3,
+  ClipboardList,
+  MessageSquareWarning,
+} from "lucide-react";
+import { TbMatrix, TbBulb } from "react-icons/tb";
+import { MdDashboardCustomize } from "react-icons/md";
+import { TbCategory, TbReportAnalytics, TbDiscount } from "react-icons/tb";
 
+export interface SubmenuItem {
+  label: string;
+  href: string;
+  icon?: React.ElementType;
+}
 
+export interface MenuItem {
+  label: string;
+  href?: string;
+  icon: React.ElementType;
+  submenu?: SubmenuItem[];
+}
 
-// for home page navbar 
-const menuData = [
-  { id: 1, title: "Home", href: "/" },
-  { id: 1, title: "About Us", href: "/about-us" },
-  { id: 2, title: "Community", href: "/community" },
-  { id: 3, title: "Blogs", href: "/blogs" },
+export interface MenuGroup {
+  menu: MenuItem[];
+}
+
+export interface MenuData {
+  linkData: MenuGroup[];
+}
+
+// for orbit-export
+export const exportMenuData: MenuData = {
+  linkData: [
+    {
+      menu: [
+        {
+          label: "Dashboard",
+          href: "/dashboard/orbit-export",
+          icon: LayoutDashboard,
+        },
+        {
+          label: "My Products",
+          href: "/dashboard/orbit-export/my-products",
+          icon: MdDashboardCustomize,
+        },
+        {
+          label: "Inventory",
+          href: "/dashboard/orbit-export/inventory",
+          icon: TbCategory,
+        },
+        {
+          label: "Export Journey",
+          href: "/dashboard/orbit-export/export-journey",
+          icon: Ticket,
+        },
+
+        {
+          label: "Sales",
+          href: "/dashboard/orbit-export/sales",
+          icon: Users,
+        },
+        {
+          label: "Message",
+          href: "/dashboard/message",
+          icon: ShieldCheck,
+        },
+        {
+          label: "Notifications",
+          href: "/dashboard/notifications",
+          icon: Bell,
+        },
+        {
+          label: "Contract &Compliance",
+          href: "/dashboard/orbit-export/contract-compliance",
+          icon: MessageSquareWarning,
+        },
+        {
+          label: "My Account",
+          href: "/dashboard/orbit-export/my-account",
+          icon: UserRound,
+        },
+      ],
+    },
+  ],
+};
+
+// import orbit
+export const importMenuData: MenuData = {
+  linkData: [
+    {
+      menu: [
+        {
+          label: "Dashboard",
+          href: "/dashboard/orbit-import",
+          icon: LayoutDashboard,
+        },
+        {
+          label: "My Requests",
+          href: "/dashboard/orbit-import/my-request",
+          icon: MdDashboardCustomize,
+        },
+        {
+          label: "My Orders",
+          href: "/dashboard/orbit-import/my-orders",
+          icon: TbCategory,
+        },
+        // {
+        //   label: "Business Analysis",
+        //   href: "/dashboard/orbit-import/business-analysis",
+        //   icon: TbReportAnalytics,
+        // },
+        {
+          label: "Message",
+          href: "/dashboard/messages",
+          icon: ShieldCheck,
+        },
+        {
+          label: "Notifications",
+          href: "/dashboard/notifications",
+          icon: Bell,
+        },
+        // {
+        //   label: "Contract & Compliance",
+        //   href: "/dashboard/orbit-import/contract-compliance",
+        //   icon: MessageSquareWarning,
+        // },
+        {
+          label: "My Account",
+          href: "/dashboard/orbit-import/my-account",
+          icon: UserRound,
+        },
+      ],
+    },
+  ],
+};
+
+// supplier
+export const supplierMenuData: MenuData = {
+  linkData: [
+    {
+      menu: [
+        {
+          label: "Home",
+          href: "/dashboard/supplier",
+          icon: LayoutDashboard,
+        },
+        {
+          label: "Products",
+          href: "/dashboard/supplier/products",
+          icon: MdDashboardCustomize,
+        },
+        {
+          label: "Orders",
+          href: "/dashboard/supplier/orders",
+          icon: TbCategory,
+        },
+        {
+          label: "Messages",
+          href: "/dashboard/messages",
+          icon: ShieldCheck,
+        },
+        {
+          label: "Notifications",
+          href: "/dashboard/notifications",
+          icon: Bell,
+        },
+        {
+          label: "Reputation",
+          href: "/dashboard/supplier/reputation",
+          icon: MessageSquareWarning,
+        },
+        {
+          label: "Contracts & Compliance",
+          href: "/dashboard/supplier/contracts-compliance",
+          icon: UserRound,
+        },
+        {
+          label: "My Account",
+          href: "/dashboard/supplier/my-account",
+          icon: UserRound,
+        },
+      ],
+    },
+  ],
+};
+
+// logistics partner
+export const logisticPartnerMenuData: MenuData = {
+  linkData: [
+    {
+      menu: [
+        {
+          label: "Home",
+          href: "/dashboard/logistics-partner",
+          icon: LayoutDashboard,
+        },
+        {
+          label: "Orders",
+          href: "/dashboard/logistics-partner/orders",
+          icon: Ticket,
+        },
+        {
+          label: "Messages",
+          href: "/dashboard/messages",
+          icon: CalendarDays,
+        },
+        {
+          label: "Notifications",
+          href: "/dashboard/notifications",
+          icon: Heart,
+        },
+        {
+          label: "Contracts & Compliance",
+          href: "/dashboard/logistics-partner/contracts-compliance",
+          icon: CreditCard,
+        },
+        {
+          label: "My Account",
+          href: "/dashboard/logistics-partner/my-account",
+          icon: Bell,
+        },
+        {
+          label: "Profile",
+          href: "/dashboard/logistics-partner/profile",
+          icon: User,
+        },
+      ],
+    },
+  ],
+};
+
+export const navItems: MenuItem[] = [
   {
-    id: 4,
-    title: "Services",
-    subMenu: [
-      { title: "Content 1", href: "/services/content1" },
-      { title: "Content 2", href: "/services/content2" },
-      { title: "Content 3", href: "/services/content3" },
-      { title: "Content 4", href: "/services/content4" },
-      { title: "Content 5", href: "/services/content5" },
-      { title: "Content 6", href: "/services/content6" },
-    ],
+    label: "Events",
+    href: "/events",
+    icon: CalendarDays,
   },
-  { id: 5, title: "Contact Us", href: "/contact-us" },
+  {
+    label: "Sports",
+    href: "/events?category=sports",
+    icon: Ticket,
+  },
+  {
+    label: "Music",
+    href: "/events?category=music",
+    icon: Heart,
+  },
+  {
+    label: "Shows",
+    href: "/events?category=shows",
+    icon: Bell,
+  },
 ];
-
-
-//   for dashboard  all navigation data 
-
-const dashboardData = [
-  {
-    id: 1,
-    title: "Overview",
-    href: "/admin/overview",
-    icon: MdSentimentSatisfied
-  },
-  {
-    id: 2,
-    title: "Users",
-    href: "/admin/users",
-    icon: FaUser
-  },
-  {
-    id: 3,
-    title: "Reports",
-    href: "/admin/reports",
-    icon: MdReport,
-    subMenu: [
-      {
-        title: "Performance",
-        href: "/admin/reports/performance",
-      },
-      {
-        title: "Conversion",
-        href: "/admin/reports/conversion",
-      },
-      {
-        title: "Conversion Logs",
-        href: "/admin/reports/conversion-logs",
-      },
-      {
-        title: "Click Logs",
-        href: "/admin/reports/click-logs",
-      },
-    ],
-  },
-  {
-    id: 4,
-    title: "Settings",
-    href: "/admin/settings",
-    icon: MdSettings,
-    // subMenu: [
-    //   { 
-    //     title: "Profile Settings", 
-    //     href: "/admin/settings/profile", 
-    //   },
-    //   { 
-    //     title: "Security", 
-    //     href: "/admin/settings/security", 
-    //   },
-    //   { 
-    //     title: "Notifications", 
-    //     href: "/admin/settings/notifications", 
-    //   },
-    // ],
-  },
-  {
-    id: 5,
-    title: "Help & Support",
-    href: "/admin/help",
-    icon: MdSupport
-  },
-];
-
-const settingsData = [
-  {
-    id: 1,
-    title: "Profile Settings",
-    href: "/admin/settings/profile",
-    icon: MdSentimentSatisfied
-  },
-  {
-    id: 2,
-    title: "Security",
-    href: "/admin/settings/security",
-    icon: MdSentimentSatisfied
-  },
-  {
-    id: 3,
-    title: "Notifications",
-    href: "/admin/settings/notifications",
-    icon: MdSentimentSatisfied
-  },
-
-]
-
-
-// Export the all data
-export { menuData, dashboardData, settingsData };
-
-
