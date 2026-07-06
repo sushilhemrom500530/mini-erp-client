@@ -55,16 +55,16 @@ export default function NavItem({
         pathname === href || submenu?.some((item) => pathname === item.href);
 
     return (
-        <div className="relative w-full">
+        <div className="relative w-full my-1.5">
             <div
                 onClick={submenu ? () => handleSubmenuToggle(label) : handleClick}
-                className={`w-full flex items-center cursor-pointer transition-all ${isParentActive ? activeClass : inactiveClass
+                className={`w-full flex items-center cursor-pointer transition-all gap-3 ${isParentActive ? activeClass : inactiveClass
                     }`}
             >
                 {!submenu ? (
                     <Link
                         to={href || "#"}
-                        className="flex items-center gap-3 w-full text-lg font-medium px-5 py-2"
+                        className="flex items-center gap-3 w-full text-base font-medium px-5 py-2"
                         onClick={() => setNavOpened(false)}
                     >
                         {Icon && <Icon size={22} />}
@@ -72,7 +72,7 @@ export default function NavItem({
                     </Link>
                 ) : (
                     <div className="flex items-center justify-between w-full px-5 py-2">
-                        <div className="flex items-center gap-3 text-lg font-medium">
+                        <div className="flex items-center gap-3 text-base font-medium">
                             {Icon && <Icon size={22} />}
                             <span>{label}</span>
                         </div>

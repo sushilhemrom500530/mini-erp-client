@@ -1,26 +1,14 @@
-import React, { useState, type Dispatch, type SetStateAction } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { FaHandHoldingDollar } from "react-icons/fa6";
+import { useState, type Dispatch, type SetStateAction } from "react";
+import { useLocation } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
-import { importMenuData, exportMenuData, supplierMenuData, logisticPartnerMenuData } from "../../../data/menu-items/index.js";
+import { sidebarMenus, type MenuItem } from "../../../data/menu-items/index.js";
 import NavItem from "../nav-menu/index.js";
 import Logo from "../../shared/logo/index.js";
 
 interface User {
     name: string;
     email: string;
-    role: "import" | "export" | "supplier" | "logistic";
-}
-
-interface MenuItem {
-    href?: string;
-    icon?: React.ElementType;
-    label: string;
-    submenu?: Array<{ label: string; href: string; icon?: React.ElementType }>;
-}
-
-interface MenuSection {
-    menu: MenuItem[];
+    role: "admin" | "manager" | "employee";
 }
 
 interface SidebarProps {
@@ -31,7 +19,7 @@ interface SidebarProps {
 const user: User = {
     name: "Sushil Hemrom",
     email: "sushil@gmail.com",
-    role: "supplier",
+    role: "admin",
 };
 
 export default function Sidebar({ navOpened, setNavOpened }: SidebarProps) {
@@ -39,18 +27,8 @@ export default function Sidebar({ navOpened, setNavOpened }: SidebarProps) {
     // const { logoutUser } = useAuthService();
 
     const location = useLocation();
-    const pathname = location.pathname;
 
-    const menuLinks: MenuSection[] =
-        user?.role === "import"
-            ? importMenuData?.linkData
-            : user?.role === "export"
-                ? exportMenuData?.linkData
-                : user?.role === "supplier"
-                    ? supplierMenuData?.linkData
-                    : user?.role === "logistic"
-                        ? logisticPartnerMenuData?.linkData
-                        : [];
+    const menuLinks = user ? sidebarMenus[user.role] : [];
 
     const closeAllSubmenus = (): void => {
         setOpenSubmenu(null);
@@ -60,9 +38,6 @@ export default function Sidebar({ navOpened, setNavOpened }: SidebarProps) {
         setOpenSubmenu((prev) => (prev === label ? null : label));
     };
 
-    const activeClass = "bg-primary text-white";
-    const inactiveClass = "text-[#43464A] hover:text-primary hover:bg-primary/10";
-
     return (
         <>
             {/* Backdrop for mobile */}
@@ -71,62 +46,50 @@ export default function Sidebar({ navOpened, setNavOpened }: SidebarProps) {
                     }`}
                 onClick={() => setNavOpened(false)}
             ></div>
-
-            {/* Sidebar */}
-            <div
-                className={`
-                    fixed top-0 left-0 z-30 h-screen w-[288px] overflow-y-auto transition-transform duration-300 border-e border-e-[#E5E7EB] bg-white
-                    ${navOpened ? "translate-x-0" : "-translate-x-full"}
-                    lg:translate-x-0  
-                `}
+            <div className={`
+        fixed top-0 left-0 z-30 h-screen w-64 overflow-y-auto border-e border-e-[#E5E7EB] bg-white transition-transform duration-300
+        ${navOpened ? "translate-x-0" : "-translate-x-full"}
+        lg:translate-x-0
+    `}
             >
-                <div className="flex flex-col gap-5 pt-28 lg:pt-0">
-                    <div className="px-2 flex items-center justify-center hidden lg:block">
-                        <Logo />
-                    </div>
-                    <div>
+                <div className="flex h-full flex-col justify-between">
+
+                    {/* Top */}
+                    <div className="flex flex-col gap-5 pt-28 lg:pt-0">
+
+                        <div className="hidden px-2 lg:flex items-center justify-center py-3">
+                            <Logo />
+                        </div>
+
                         <nav>
-                            {menuLinks?.map((section, sIndex) => (
-                                <div key={sIndex} className="space-y-4">
-                                    {section?.menu?.map((item, index) => (
-                                        <NavItem
-                                            key={index}
-                                            href={item?.href || "#"}
-                                            icon={item?.icon}
-                                            label={item?.label}
-                                            submenu={item?.submenu}
-                                            openSubmenu={openSubmenu}
-                                            handleSubmenuToggle={handleSubmenuToggle}
-                                            setNavOpened={setNavOpened}
-                                            closeAllSubmenus={closeAllSubmenus}
-                                        />
-                                    ))}
-
-                                    {user?.role === "supplier" && (
-                                        <Link to="/dashboard/supplier/upgrade-plan">
-                                            <button
-                                                className={`text-xl font-medium w-full flex items-center gap-3 px-5 py-2 ${pathname === "/dashboard/supplier/membership-plan"
-                                                    ? activeClass
-                                                    : inactiveClass
-                                                    } transition-all duration-300 cursor-pointer`}
-                                            >
-                                                <FaHandHoldingDollar size={20} />
-                                                Upgrade subscription
-                                            </button>
-                                        </Link>
-                                    )}
-                                </div>
+                            {menuLinks.map((item: MenuItem, index: number) => (
+                                <NavItem
+                                    key={index}
+                                    href={item.href || "#"}
+                                    icon={item.icon}
+                                    label={item.label}
+                                    submenu={item.submenu}
+                                    openSubmenu={openSubmenu}
+                                    handleSubmenuToggle={handleSubmenuToggle}
+                                    setNavOpened={setNavOpened}
+                                    closeAllSubmenus={closeAllSubmenus}
+                                />
                             ))}
-
-                            <button
-                                // onClick={logoutUser}
-                                className="text-xl font-medium flex items-center gap-3 my-4 px-6 py-3 text-[#43464A] cursor-pointer text-red-600 hover:text-red-600/90 transition"
-                            >
-                                <MdLogout size={20} />
-                                Log Out
-                            </button>
                         </nav>
+
                     </div>
+
+                    {/* Bottom */}
+                    <div className="border-t border-gray-200 py-4">
+                        <button
+                            // onClick={logoutUser}
+                            className="flex w-full items-center gap-3 rounded-lg px-5 py-3 text-red-600 transition hover:bg-red-50 cursor-pointer"
+                        >
+                            <MdLogout size={20} />
+                            <span className="font-medium">Log Out</span>
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </>
