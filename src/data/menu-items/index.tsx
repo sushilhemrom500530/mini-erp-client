@@ -34,27 +34,27 @@ export const sidebarMenus = {
   admin: [
     {
       label: "Dashboard",
-      href: "/dashboard",
+      href: "/admin/dashboard",
       icon: LayoutDashboard,
     },
     {
       label: "Products",
-      href: "/dashboard/products",
+      href: "/admin/dashboard/products",
       icon: Package,
     },
     {
       label: "Add Product",
-      href: "/dashboard/products/add",
+      href: "/admin/dashboard/products/add",
       icon: PackagePlus,
     },
     {
       label: "Create Sale",
-      href: "/dashboard/sales/create",
+      href: "/admin/dashboard/sales/create",
       icon: ShoppingCart,
     },
     {
       label: "Profile",
-      href: "/dashboard/profile",
+      href: "/admin/dashboard/profile",
       icon: UserRound,
     },
   ],
@@ -62,27 +62,27 @@ export const sidebarMenus = {
   manager: [
     {
       label: "Dashboard",
-      href: "/dashboard",
+      href: "/manager/dashboard",
       icon: LayoutDashboard,
     },
     {
       label: "Products",
-      href: "/dashboard/products",
+      href: "/manager/dashboard/products",
       icon: Package,
     },
     {
       label: "Add Product",
-      href: "/dashboard/products/add",
+      href: "/manager/dashboard/products/add",
       icon: PackagePlus,
     },
     {
       label: "Create Sale",
-      href: "/dashboard/sales/create",
+      href: "/manager/dashboard/sales/create",
       icon: ShoppingCart,
     },
     {
       label: "Profile",
-      href: "/dashboard/profile",
+      href: "/manager/dashboard/profile",
       icon: UserRound,
     },
   ],
@@ -90,22 +90,22 @@ export const sidebarMenus = {
   employee: [
     {
       label: "Dashboard",
-      href: "/dashboard",
+      href: "/employee/dashboard",
       icon: LayoutDashboard,
     },
     {
       label: "Products",
-      href: "/dashboard/products",
+      href: "/employee/dashboard/products",
       icon: Package,
     },
     {
       label: "Create Sale",
-      href: "/dashboard/sales/create",
+      href: "/employee/dashboard/sales/create",
       icon: ShoppingCart,
     },
     {
       label: "Profile",
-      href: "/dashboard/profile",
+      href: "/employee/dashboard/profile",
       icon: UserRound,
     },
   ],

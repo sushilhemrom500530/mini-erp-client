@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import DashboardLayout from "../../layout/dashboard/index.jsx";
+import Dashboard from "../../view/admin/dashboard/index.js";
 
 const adminRoutes = [
     {
@@ -12,7 +13,7 @@ const adminRoutes = [
             },
             {
                 path: "dashboard",
-                element: <div className="">Dashboard</div>
+                element: <Dashboard />
             },
         ]
     }
