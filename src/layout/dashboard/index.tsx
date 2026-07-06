@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { RiMenu3Line } from "react-icons/ri";
-import { dashboardData } from "../../data/menu-items/index.jsx";
-import AccordionMenu from "../../components/link-accordion/index.jsx";
-import AccordionMenuLink from "../../components/menu-accordion/index.jsx";
+import { dashboardData } from "../../data/menu-items/index.js";
 import { Outlet } from "react-router-dom";
-import useThemeMode from "../../hooks/use-theme/index.js";
-import Logo from "../../Components/shared/logo/index.jsx";
+import Logo from "../../Components/shared/logo/index.js";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { BsSun } from "react-icons/bs";
+import useThemeMode from "../../hooks/use-theme/index.js";
 
 
 const Index = () => {
@@ -21,6 +19,7 @@ const Index = () => {
     const handleToggle = (id: any) => {
         setOpenAccordion(openAccordion === id ? null : id);
     };
+
     return (
         <div>
             <div className="relative">
@@ -36,7 +35,7 @@ const Index = () => {
                     {/* all menu link are here map or called  */}
                     <div className="common-flex flex-col
                      gap-1 mt-7">
-                        {dashboardData.map((item: any) => (
+                        {/* {dashboardData.map((item: any) => (
                             item?.subMenu ? (
                                 <AccordionMenu
                                     key={item?.id}
@@ -63,7 +62,7 @@ const Index = () => {
                                     handleClick={handleToggleLeft}
                                 />
                             )
-                        ))}
+                        ))} */}
                     </div>
                 </div>
 

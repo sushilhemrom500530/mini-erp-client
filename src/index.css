@@ -1,111 +1,88 @@
 @import url('https://fonts.googleapis.com/css2?family=Seaweed+Script&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1FCE93;
+  --color-secondary: #3CAE97;
+  --color-light-primary: #e8a100;
+  --color-light-secondary: #f0c050;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* Prevent the off-canvas mobile sidebar (translated off-screen right)
+   from adding horizontal scroll. Clip at the root scroller so the
+   sticky navbar keeps working. */
+html {
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "DM Sans", sans-serif;
+}
+
+/* Hide scrollbar while keeping horizontal scroll (used by drawer tab nav). */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.primary {
+  color: #1FCE93 !important;
+}
+
+.secondary {
+  color: #3CAE97 !important;
+}
+
+.light_primary {
+  color: #134843 !important;
+}
 
 
+.custom-textarea:hover,
+.custom-textarea:focus,
+.custom-textarea:focus-within {
+  border-color: #8a2ce2 !important;
+  box-shadow: 0 0 0 2px rgba(212, 175, 56, 0.2);
+}
+
+.ant-tag {
+  @apply !flex !items-center !gap-2 !w-max;
+}
 
 .custom-container {
-    @apply container mx-auto px-3 md:px-4 lg:px-10;
+  @apply container mx-auto px-3 md:px-4 lg:px-10;
 }
 
 .common-flex {
-    @apply flex items-center justify-center w-full
+  @apply flex items-center justify-center w-full
 }
 
 .menu-link {
-    @apply flex items-start justify-start gap-1 text-[14px] font-medium px-3 py-2 w-full rounded-md
+  @apply flex items-start justify-start gap-1 text-[14px] font-medium px-3 py-2 w-full rounded-md
 }
 
 
 .seaweed-script {
-    font-family: "Seaweed Script", cursive;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Seaweed Script", cursive;
+  font-weight: 400;
+  font-style: normal;
 }
-
-/* for animation  */
-
-@keyframes jump {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-20px); 
-    }
-    100% {
-      transform: translateY(0); 
-    }
-  }
-  
-  .animated-box {
-    animation: jump 4s infinite linear;
-  }
-  
-  @keyframes triangle {
-    0% {
-        transform: translate(0, 0); 
-      }
-      33% {
-        transform: translate(0, 120px); 
-      }
-      66% {
-        transform: translate(-120px, 120px); 
-      }
-      100% {
-        transform: translate(0, 0); 
-      }
-  }
-  
-  .moving-box {
-    animation: triangle 4s linear infinite;
-  }
-  
-
-  /* for shooting border  */
-  /* ShootingBorderComponent.css */
-.shooting-border {
-  position: relative;
-  padding: 16px;
-}
-
-.shooting-border::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background-color: #3b82f6; /* Tailwind's blue-500 */
-  animation: shoot 1s forwards;
-}
-
-@keyframes shoot {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-
-/* Shimmer background animation */
-.shimmer-button .animate-shimmer {
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 300%;
-  height: 100%;
-  animation: shimmer 2.5s infinite linear;
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-150%);
-  }
-  100% {
-    transform: translateX(150%);
-  }
-}
-

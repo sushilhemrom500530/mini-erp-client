@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
-import DashbaordLayout from "../../layout/dashboard/index.jsx";
+import Index from "../../layout/main/index.js";
 
-const adminRoutes = [
+const userRoutes = [
     {
-        path: "/admin/",
-        element: <DashbaordLayout />,
+        path: "/user/",
+        element: <Index />,
         children: [
             {
                 path: "",
@@ -12,10 +12,10 @@ const adminRoutes = [
             },
             {
                 path: "dashboard",
-                element: <div className="">Dashboard</div>
-            },
+                element: <div>User Dashboard</div>
+            }
         ]
     }
 ]
 
-export default adminRoutes;
+export default userRoutes;
