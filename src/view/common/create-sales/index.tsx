@@ -176,7 +176,7 @@ export default function CreateSalesContent() {
             </div>
 
             {/* Cart Footer Summary */}
-            <div className="border-t border-gray-200 bg-white sticky bottom-0 left-0 right-0 z-10 pb-safe">
+            <div className="border-t border-slate-200 bg-white sticky bottom-0 left-0 right-0 z-10 pb-safe">
                 <div className="p-4 sm:p-5 flex flex-col gap-2">
                     <div className="flex justify-between items-center text-sm">
                         <span className="text-gray-500 font-medium">Items Count</span>
@@ -210,7 +210,7 @@ export default function CreateSalesContent() {
                         onClick={handleSave}
                         disabled={cart.length === 0}
                         icon={<Receipt className="w-4 h-4" />}
-                        className="flex-[2] w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-700 font-bold flex items-center justify-center gap-2"
+                        className="flex-[2] w-full h-12 rounded-xl !bg-secondary hover:!bg-secondary/90 font-bold flex items-center justify-center gap-2"
                     >
                         Create Sale
                     </Button>
@@ -227,7 +227,7 @@ export default function CreateSalesContent() {
 
                 <div className="p-4 sm:p-6 border-b border-gray-50 flex flex-col sm:flex-row gap-4 justify-between items-stretch sm:items-center bg-white sticky top-0 z-10">
                     <div className="flex items-center gap-3">
-                        <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl">
+                        <div className="p-2.5 bg-secondary/10 text-secondary rounded-xl">
                             <Package className="w-5 h-5" />
                         </div>
                         <div>
@@ -290,7 +290,7 @@ export default function CreateSalesContent() {
 
 
                                     <div className="text-right sm:text-center sm:mt-auto flex flex-col items-end sm:items-center justify-center min-w-[80px]">
-                                        <div className="font-extrabold text-blue-600 text-base sm:text-lg sm:mb-1">
+                                        <div className="font-semibold text-black/90 text-base sm:text-lg sm:mb-1">
                                             ${p.sellingPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                         </div>
                                         {p.stockQuantity > 0 ? (
@@ -318,7 +318,7 @@ export default function CreateSalesContent() {
                         <h2 className="text-lg font-bold text-gray-900">Checkout Cart</h2>
                     </div>
                     {totals.quantity > 0 && (
-                        <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                        <div className="w-6 h-6 bg-primary/10 text-secondary rounded-full flex items-center justify-center text-xs font-bold">
                             {totals.quantity}
                         </div>
                     )}

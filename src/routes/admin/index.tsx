@@ -7,6 +7,7 @@ import CreateSales from "../../view/admin/create-sales/index.js";
 import Profile from "../../view/admin/profile/index.js";
 import PrivateRoute from "../private/index.js";
 import UpdateProduct from "../../view/admin/update-product/index.js";
+import ViewSalesHistory from "../../view/admin/view-sale-history/index.js";
 
 const adminRoutes = [
     {
@@ -40,6 +41,10 @@ const adminRoutes = [
             {
                 path: "dashboard/sales/create",
                 element: <CreateSales />
+            },
+            {
+                path: "dashboard/sales/history",
+                element: <ViewSalesHistory />
             },
             {
                 path: "dashboard/profile",

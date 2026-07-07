@@ -8,6 +8,7 @@ import {
 import { TbMatrix, TbBulb } from "react-icons/tb";
 import { MdDashboardCustomize } from "react-icons/md";
 import { TbCategory, TbReportAnalytics, TbDiscount } from "react-icons/tb";
+import { FaHistory } from "react-icons/fa";
 
 export interface SubmenuItem {
   label: string;
@@ -51,6 +52,11 @@ export const sidebarMenus = {
       label: "Create Sale",
       href: "/admin/dashboard/sales/create",
       icon: ShoppingCart,
+    },
+    {
+      label: "Sales History",
+      href: "/admin/dashboard/sales/history",
+      icon: FaHistory,
     },
     {
       label: "Profile",

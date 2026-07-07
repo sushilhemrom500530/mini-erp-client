@@ -5,6 +5,7 @@ import AuthLayout from "../../layout/auth/index.js";
 import ForgotPassword from "../../view/auth/forgot-password/index.js";
 import VerifyOtp from "../../view/auth/verify-otp/index.js";
 import ResetPassword from "../../view/auth/reset-password/index.js";
+import EmailVerification from "../../view/auth/email-verification/index.js";
 
 const authRoutes = [
     {
@@ -22,6 +23,10 @@ const authRoutes = [
             {
                 path: "register",
                 element: <SignUp />
+            },
+            {
+                path: "email-verification",
+                element: <EmailVerification />
             },
             {
                 path: "forgot-password",
