@@ -53,7 +53,7 @@ export interface ILoginRequest {
 }
 
 export interface ILoginData {
-    user: IUser;
+    results: IUser;
     token: string;
 }
 

@@ -5,21 +5,19 @@ import { ArrowRight, BarChart3, ShieldCheck, Zap } from "lucide-react";
 export default function HeroSection() {
   return (
     <div className="relative overflow-hidden bg-white border-b border-gray-100 py-20 lg:py-28">
-      {/* Background Subtlety */}
+
       <div className="absolute inset-0 bg-[radial-gradient(#f1f5f9_1px,transparent_1px)] [background-size:16px_16px] opacity-70" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
-          {/* Left Side: Content */}
           <div className="lg:col-span-6 max-w-2xl mx-auto lg:mx-0 text-center lg:text-left">
-            {/* Tag / Badge */}
+
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-50 text-slate-600 border border-slate-200 mb-6">
               <Zap className="w-3.5 h-3.5 text-primary" />
               Smart Inventory & Supply Chain
             </span>
 
-            {/* Main Heading */}
             <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 tracking-tight leading-tight sm:leading-none">
               Streamline your business <br className="hidden sm:inline" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-slate-800 to-gray-700">
@@ -27,12 +25,11 @@ export default function HeroSection() {
               </span>
             </h1>
 
-            {/* Subtitle */}
+
             <p className="mt-4 text-base sm:text-lg text-gray-500 font-normal leading-relaxed max-w-xl mx-auto lg:mx-0">
               A minimalist ERP engineered for modern suppliers, logistics partners, and exporters. Manage inventory, track orders, and monitor insights with zero friction.
             </p>
 
-            {/* Action Buttons */}
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
               <Link
                 to="#"
@@ -49,7 +46,6 @@ export default function HeroSection() {
               </Link>
             </div>
 
-            {/* Micro Trust Factors */}
             <div className="mt-10 pt-8 border-t border-gray-100 flex items-center justify-center lg:justify-start gap-6 text-xs text-gray-400 font-medium">
               <div className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-emerald-500" /> Enterprise Security
@@ -60,11 +56,10 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right Side: Structural Dashboard Motif (Human-designed feel) */}
+          {/* Right Side */}
           <div className="lg:col-span-6 hidden lg:block relative">
             <div className="bg-slate-50 border border-gray-200/80 rounded-xl p-5 shadow-sm max-w-[540px] ml-auto">
 
-              {/* Fake Window Controls */}
               <div className="flex items-center gap-1.5 mb-4 border-b border-gray-200/60 pb-3">
                 <div className="w-2.5 h-2.5 rounded-full bg-gray-200" />
                 <div className="w-2.5 h-2.5 rounded-full bg-gray-200" />
@@ -72,7 +67,6 @@ export default function HeroSection() {
                 <span className="text-[11px] text-gray-400 font-medium ml-2">erp-system-v2.0</span>
               </div>
 
-              {/* Skeleton Mockup Rows */}
               <div className="space-y-3">
                 <div className="h-8 bg-white border border-gray-100 rounded-md flex items-center justify-between px-3">
                   <div className="w-24 h-2 bg-gray-200 rounded" />
@@ -96,7 +90,6 @@ export default function HeroSection() {
 
                 <div className="h-32 bg-white border border-gray-100 rounded-md p-3">
                   <div className="w-32 h-2 bg-gray-200 rounded mb-4" />
-                  {/* Fake Chart Lines */}
                   <div className="w-full h-16 flex items-end gap-1.5 pt-2">
                     <div className="w-full bg-gray-100 rounded-t h-[40%]" />
                     <div className="w-full bg-gray-100 rounded-t h-[65%]" />

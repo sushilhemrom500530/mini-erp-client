@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button, Checkbox, Form, message } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import { FcGoogle } from "react-icons/fc";
 import { FaLock, FaUser } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import FormField from "../../../Components/form/index.js";
 import type { AppDispatch } from "../../../redux/store.js";
 import { useLoginMutation } from "../../../redux/features/user/index.js";
 import { setCredentials } from "../../../redux/userSlice.js";
-
 
 interface LoginFormValues {
     email: string;
@@ -31,16 +29,31 @@ export default function Login() {
 
             dispatch(
                 setCredentials({
-                    user: res.data.user,
+                    user: res.data.results,
                     token: res.data.token,
                 })
             );
-
+            const loginUser = res.data.results;
             message.success(res.message);
 
-            navigate(location.state?.from || "/dashboard", {
-                replace: true,
-            });
+            console.log("Login Response: ", res)
+            if (loginUser.role === "admin") {
+                navigate(location.state?.from || "/admin", {
+                    replace: true,
+                });
+            } else if (loginUser.role === "manager") {
+                navigate(location.state?.from || "/manager", {
+                    replace: true,
+                });
+            } else if (loginUser.role === "employee") {
+                navigate(location.state?.from || "/employee", {
+                    replace: true,
+                });
+            } else {
+                navigate(location.state?.from || "/", {
+                    replace: true,
+                });
+            }
         } catch (error: any) {
             message.error(error?.data?.message || "Login failed");
         }
@@ -77,47 +90,61 @@ export default function Login() {
                     layout="vertical"
                     onFinish={handleSubmit}
                     autoComplete="off"
+                    requiredMark={false}
                 >
                     <div className="space-y-4">
-                        <div>
-                            <label className="mb-2 block text-sm font-medium text-white">
-                                Email
-                            </label>
-
-                            <FormField
-                                name="email"
+                        {/* Email Field */}
+                        <Form.Item
+                            name="email"
+                            label={<span className="text-sm font-medium text-white">Email</span>}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter your email.",
+                                },
+                                {
+                                    type: "email",
+                                    message: "Enter a valid email address.",
+                                },
+                            ]}
+                        >
+                            <Input
                                 type="email"
                                 placeholder="Enter your email"
-                                icon={<FaUser className="mr-2 text-gray-500" />}
-                                required
-                                rules={[
-                                    {
-                                        type: "email",
-                                        message: "Enter a valid email address.",
-                                    },
-                                ]}
+                                size="large"
+                                prefix={<FaUser className="mr-2 text-gray-500" />}
+                                className="!bg-white/10 !text-white"
+                                classNames={{
+                                    input: 'placeholder:!text-white/60'
+                                }}
                             />
-                        </div>
+                        </Form.Item>
 
-                        <div>
-                            <label className="mb-2 block text-sm font-medium text-white">
-                                Password
-                            </label>
-
-                            <FormField
-                                name="password"
-                                type="password"
+                        {/* Password Field */}
+                        <Form.Item
+                            name="password"
+                            label={<span className="text-sm font-medium text-white">Password</span>}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter your password.",
+                                },
+                                {
+                                    min: 6,
+                                    message: "Password must be at least 6 characters.",
+                                },
+                            ]}
+                        >
+                            <Input.Password
                                 placeholder="Enter your password"
-                                icon={<FaLock className="mr-2 text-gray-500" />}
-                                required
-                                rules={[
-                                    {
-                                        min: 6,
-                                        message: "Password must be at least 6 characters.",
-                                    },
-                                ]}
+                                size="large"
+                                prefix={<FaLock className="mr-2 text-gray-500" />}
+                                className="!bg-white/10 !text-white"
+                                classNames={{
+                                    input: 'placeholder:!text-white/60'
+                                }}
                             />
-                        </div>
+                        </Form.Item>
                     </div>
 
                     <div className="mt-6 mb-8 flex items-center justify-between">
