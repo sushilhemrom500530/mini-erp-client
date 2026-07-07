@@ -285,6 +285,7 @@ const FormField: React.FC<FormFieldProps> = ({
                 <Dragger
                     name={draggerName}
                     multiple={multiple}
+                    {...(multiple ? {} : { maxCount: 1 })}
                     accept={accept as any}
                     beforeUpload={() => false}
                     listType="picture"
