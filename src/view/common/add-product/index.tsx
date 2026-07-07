@@ -2,17 +2,47 @@ import { useState } from 'react';
 import { Button, Form, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import FormField from '../../../Components/form/index.js';
+import { useCreateProductMutation } from '../../../redux/features/product/index.js';
 
 export default function AddProductContent() {
+    const [createProduct, { isLoading }] = useCreateProductMutation();
     const [form] = Form.useForm();
     const navigate = useNavigate();
 
-    const handleSave = (values: any) => {
-        console.log("Saving product data:", values);
-        message.success('Product saved successfully!');
-        // navigate(-1);
-    };
+    const handleSave = async (values: any) => {
+        try {
+            const formData = new FormData();
 
+            formData.append("productName", values.productName);
+            formData.append("sku", values.sku);
+            formData.append("category", values.category);
+            formData.append("purchasePrice", String(values.purchasePrice));
+            formData.append("sellingPrice", String(values.sellingPrice));
+            formData.append("stockQuantity", String(values.stockQuantity));
+
+            // Upload file
+            if (values.productImage) {
+                const file =
+                    Array.isArray(values.productImage)
+                        ? values.productImage[0]
+                        : values.productImage;
+
+                formData.append("productImage", file);
+            }
+
+            const res = await createProduct(formData).unwrap();
+
+            message.success(res.message || "Product created successfully.");
+
+            form.resetFields();
+
+            navigate(-1);
+        } catch (error: any) {
+            message.error(
+                error?.data?.message || "Failed to create product."
+            );
+        }
+    };
     return (
         <Form
             form={form}

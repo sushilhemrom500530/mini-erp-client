@@ -34,6 +34,7 @@ export default function Login() {
                 secure: import.meta.env.PROD,
                 sameSite: "Lax",
             });
+            localStorage.setItem("user", JSON.stringify(res.data.results));
             dispatch(
                 setCredentials({
                     user: res.data.results,
@@ -43,7 +44,6 @@ export default function Login() {
             const loginUser = res.data.results;
             message.success(res.message);
 
-            console.log("Login Response: ", res)
             if (loginUser.role === "admin") {
                 navigate(location.state?.from || "/admin", {
                     replace: true,

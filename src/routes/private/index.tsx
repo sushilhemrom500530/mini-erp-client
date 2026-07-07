@@ -13,7 +13,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ allowedRoles, children }) =
     const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
 
     if (!isAuthenticated) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/auth/login" replace />;
     }
 
     if (user && !allowedRoles.includes(user.role)) {

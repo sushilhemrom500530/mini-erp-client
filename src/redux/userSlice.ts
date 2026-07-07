@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-
-import type { IAuthPayload } from "../types/user/index.js";
+import type { Reducer } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
+import type { IAuthPayload, IInitialState } from "../types/user/index.js";
 import { initialState } from "../types/user/index.js";
 
 const authSlice = createSlice({
@@ -20,10 +21,14 @@ const authSlice = createSlice({
             state.user = null;
             state.token = null;
             state.isAuthenticated = false;
+            localStorage.removeItem("user");
+            Cookies.remove("token");
         },
     },
 });
 
 export const { setCredentials, logout } = authSlice.actions;
 
-export default authSlice.reducer;
+const authReducer: Reducer<IInitialState> = authSlice.reducer;
+
+export default authReducer;

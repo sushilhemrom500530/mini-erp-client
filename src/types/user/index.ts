@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export type UserRole = "admin" | "manager" | "employee";
 
 export type UserStatus =
@@ -127,14 +129,19 @@ export interface IAuthPayload {
     token: string;
 }
 
+
 export interface IInitialState {
     user: IUser | null;
     token: string | null;
     isAuthenticated: boolean;
 }
 
+const storedToken = Cookies.get("token") || null;
+const storedUser = localStorage.getItem("user");
+const parsedUser: IUser | null = storedUser ? JSON.parse(storedUser) : null;
+
 export const initialState: IInitialState = {
-    user: null,
-    token: null,
-    isAuthenticated: false,
+    user: parsedUser,
+    token: storedToken,
+    isAuthenticated: !!storedToken && !!parsedUser,
 };
