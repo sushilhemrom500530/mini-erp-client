@@ -9,11 +9,13 @@ import { SalesSummary, StatCard } from '../../../Components/reuseable/common-car
 import { useGetAdminStatsQuery } from "../../../redux/features/dashboard/index.js";
 import LowStockTable from "../../../Components/dashboard/low-stock-table/index.js";
 import Loading from "../../../Components/reuseable/loading/index.js";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../redux/store.js";
 
 
 export default function Dashboard() {
     const { data, isLoading, error } = useGetAdminStatsQuery();
-
+    const { user } = useSelector((state: RootState) => state.auth);
     const stats = data?.data;
 
     if (isLoading) {
@@ -27,28 +29,29 @@ export default function Dashboard() {
     return (
         <div>
             <div className="space-y-8">
-
                 {/* Header */}
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <h1 className="text-3xl font-bold text-gray-900">
-                            Welcome Back 👋 Sushil
+                            Welcome Back, {user?.fullName}
                         </h1>
 
                         <p className="mt-1 text-gray-500">
                             Inventory & Sales Overview
                         </p>
                     </div>
+                    {
+                        user?.role !== "employee" && <div className="md:text-right">
+                            <p className="text-sm text-gray-500">
+                                Tuesday
+                            </p>
 
-                    <div className="text-right">
-                        <p className="text-sm text-gray-500">
-                            Tuesday
-                        </p>
+                            <h3 className="font-semibold">
+                                July 07, 2026
+                            </h3>
+                        </div>
+                    }
 
-                        <h3 className="font-semibold">
-                            July 07, 2026
-                        </h3>
-                    </div>
                 </div>
 
                 {/* Stats */}
@@ -58,12 +61,14 @@ export default function Dashboard() {
                         amount={stats?.totalProducts ?? 0}
                         icon={<Package className="w-6 h-6 text-blue-600" />}
                     />
+                    {
+                        user?.role !== "employee" && <StatCard
+                            title="Sales"
+                            amount={stats?.totalSales ?? 0}
+                            icon={<DollarSign className="w-6 h-6 text-green-600" />}
+                        />
+                    }
 
-                    <StatCard
-                        title="Sales"
-                        amount={stats?.totalSales ?? 0}
-                        icon={<DollarSign className="w-6 h-6 text-green-600" />}
-                    />
 
                     <StatCard
                         title="Low Stock"
@@ -77,8 +82,9 @@ export default function Dashboard() {
                     <div className="xl:col-span-2">
                         <LowStockTable products={stats?.recentProducts || []} />
                     </div>
-
-                    <SalesSummary totalRevenue={stats?.totalRevenue ?? 0} />
+                    {
+                        user?.role !== "employee" && <SalesSummary totalRevenue={stats?.totalRevenue ?? 0} />
+                    }
                 </div>
 
             </div>

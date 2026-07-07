@@ -1,13 +1,18 @@
 import { Navigate } from "react-router-dom";
 import Index from "../../layout/main/index.js";
 import PrivateRoute from "../private/index.js";
+import DashboardLayout from "../../layout/dashboard/index.js";
+import Dashboard from "../../view/admin/dashboard/index.js";
+import Products from "../../view/admin/products/index.js";
+import Profile from "../../view/admin/profile/index.js";
+import CreateSales from "../../view/admin/create-sales/index.js";
 
 const userRoutes = [
     {
-        path: "/user/",
+        path: "/employee/",
         element: (
             <PrivateRoute allowedRoles={["employee"]}>
-                <Index />
+                <DashboardLayout />
             </PrivateRoute>
         ),
         children: [
@@ -17,7 +22,20 @@ const userRoutes = [
             },
             {
                 path: "dashboard",
-                element: <div>User Dashboard</div>
+                element: <Dashboard />
+            },
+            {
+                path: "dashboard/products",
+                element: <Products />
+            },
+            {
+                path: "dashboard/sales/create",
+                element: <CreateSales />
+            },
+
+            {
+                path: "dashboard/profile",
+                element: <Profile />
             }
         ]
     }

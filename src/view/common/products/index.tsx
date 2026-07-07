@@ -5,12 +5,16 @@ import { useDeleteProductMutation, useGetProductsQuery } from '../../../redux/fe
 import Loading from '../../../Components/reuseable/loading/index.js';
 import { Link } from 'react-router-dom';
 import ProductDetails from './view/index.js';
+import type { RootState } from '../../../redux/store.js';
+import { useSelector } from 'react-redux';
 
 export default function ProductsContent() {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [searchTerm, setSearchTerm] = useState("");
     const [category, setCategory] = useState("");
+
+    const { user } = useSelector((state: RootState) => state.auth);
 
     const { data, isLoading } = useGetProductsQuery({
         page,
@@ -126,25 +130,30 @@ export default function ProductsContent() {
                         />
                     </Tooltip>
 
-                    <Link to={`/admin/dashboard/product/update/${record._id}`}>
-                        <Tooltip title="Edit">
-                            <Button
-                                type="text"
-                                size="small"
-                                icon={<Edit className="w-4 h-4 text-amber-600" />}
-                            />
-                        </Tooltip>
-                    </Link>
+                    {
+                        user?.role !== "employee" &&
+                        <>
+                            <Link to={`/admin/dashboard/product/update/${record._id}`}>
+                                <Tooltip title="Edit">
+                                    <Button
+                                        type="text"
+                                        size="small"
+                                        icon={<Edit className="w-4 h-4 text-amber-600" />}
+                                    />
+                                </Tooltip>
+                            </Link>
 
-                    <Tooltip title="Delete">
-                        <Button
-                            type="text"
-                            danger
-                            size="small"
-                            onClick={() => handleDelete(record._id)}
-                            icon={<Trash2 className="w-4 h-4 text-red-600" />}
-                        />
-                    </Tooltip>
+                            <Tooltip title="Delete">
+                                <Button
+                                    type="text"
+                                    danger
+                                    size="small"
+                                    onClick={() => handleDelete(record._id)}
+                                    icon={<Trash2 className="w-4 h-4 text-red-600" />}
+                                />
+                            </Tooltip>
+                        </>
+                    }
                 </Space>
             )
         }

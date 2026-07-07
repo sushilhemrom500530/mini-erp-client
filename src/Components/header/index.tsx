@@ -1,8 +1,11 @@
 "use client";
 import { IoMdMenu } from "react-icons/io";
 import { BsBellFill } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store.js";
 
 export default function Header({ navOpened, setNavOpened }: any) {
+    const { user } = useSelector((state: RootState) => state.auth);
     return (
         <div className="sticky inset-y-0 left-0 z-30 w-full border-b border-b-[#E5E7EB] h-20  bg-[#FFFFFF] [transition:0.5s]">
             <header className="flex items-center justify-between p-4">
@@ -31,12 +34,12 @@ export default function Header({ navOpened, setNavOpened }: any) {
                         </div>
                         <div className="flex w-10 md:w-14 xl:w-auto flex-1 items-center gap-2 cursor-pointer">
                             <img
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQna96LOHsB0K43Ybx1vGQyqq4IKX9k_1xW_am2qdgT-Q&s"
+                                src={user?.profileUrl ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQna96LOHsB0K43Ybx1vGQyqq4IKX9k_1xW_am2qdgT-Q&s"}
                                 alt="logo"
                                 className="w-9 h-9 rounded-full "
                             />
                             <h1 className="text-lg text-black font-medium hidden xl:block">
-                                Tamal
+                                {user?.fullName ?? "User"}
                             </h1>
                         </div>
                     </div>

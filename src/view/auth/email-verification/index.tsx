@@ -8,7 +8,6 @@ export default function EmailVerification() {
     const navigate = useNavigate();
     const [form] = Form.useForm();
 
-    // Fallback email if state is empty (passed from register page)
     const targetEmail = location.state?.email || "your email address";
 
     const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
@@ -17,7 +16,7 @@ export default function EmailVerification() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const inputRefs = useRef<HTMLInputElement[]>([]);
 
-    // Handle resend code countdown timer
+
     useEffect(() => {
         if (countdown > 0) {
             const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
@@ -27,7 +26,6 @@ export default function EmailVerification() {
         }
     }, [countdown]);
 
-    // Handle OTP Box standard typing behaviors
     const handleChange = (element: HTMLInputElement, index: number) => {
         if (isNaN(Number(element.value))) return false;
 
@@ -35,17 +33,15 @@ export default function EmailVerification() {
         updatedOtp[index] = element.value;
         setOtp(updatedOtp);
 
-        // Auto focus next input
         if (element.value !== "" && index < 5) {
             inputRefs.current[index + 1]?.focus();
         }
     };
 
-    // Handle keyboard Backspace and Arrow navigations
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
         if (e.key === "Backspace") {
             if (otp[index] === "" && index > 0) {
-                // Focus and clean previous box if current is empty
+
                 const updatedOtp = [...otp];
                 updatedOtp[index - 1] = "";
                 setOtp(updatedOtp);
@@ -117,10 +113,8 @@ export default function EmailVerification() {
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/60"></div>
 
-            {/* Glassmorphic Verification Card */}
             <div className="relative z-20 w-full max-w-lg rounded-2xl border border-white/10 bg-white/10 p-6 sm:p-10 shadow-2xl backdrop-blur-xl text-center">
 
-                {/* Branding / Header Icon */}
                 <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/20 text-white border border-white/10">
                     <MailCheck className="h-8 w-8 text-secondary" />
                 </div>
@@ -154,7 +148,6 @@ export default function EmailVerification() {
                         ))}
                     </div>
 
-                    {/* Action Button */}
                     <Button
                         htmlType="submit"
                         type="primary"

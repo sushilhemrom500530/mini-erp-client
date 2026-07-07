@@ -1,9 +1,13 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 import { sidebarMenus, type MenuItem } from "../../../data/menu-items/index.js";
 import NavItem from "../nav-menu/index.js";
 import Logo from "../../shared/logo/index.js";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../redux/store.js";
+import { logout } from "../../../redux/userSlice.js";
+import { message } from "antd";
 
 interface User {
     name: string;
@@ -16,15 +20,19 @@ interface SidebarProps {
     setNavOpened: Dispatch<SetStateAction<boolean>>;
 }
 
-const user: User = {
-    name: "Sushil Hemrom",
-    email: "sushil@gmail.com",
-    role: "admin",
-};
+
 
 export default function Sidebar({ navOpened, setNavOpened }: SidebarProps) {
     const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
-    // const { logoutUser } = useAuthService();
+    const { user } = useSelector((state: RootState) => state.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        dispatch(logout());
+        message.success("Logout successfully");
+        navigate("/auth/login");
+    };
 
     const location = useLocation();
 
@@ -82,7 +90,7 @@ export default function Sidebar({ navOpened, setNavOpened }: SidebarProps) {
                     {/* Bottom */}
                     <div className="border-t border-gray-200 py-4">
                         <button
-                            // onClick={logoutUser}
+                            onClick={handleLogout}
                             className="flex w-full items-center gap-3 rounded-lg px-5 py-3 text-red-600 transition hover:bg-red-50 cursor-pointer"
                         >
                             <MdLogout size={20} />
