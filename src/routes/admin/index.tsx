@@ -6,6 +6,7 @@ import AddProduct from "../../view/admin/add-product/index.js";
 import CreateSales from "../../view/admin/create-sales/index.js";
 import Profile from "../../view/admin/profile/index.js";
 import PrivateRoute from "../private/index.js";
+import UpdateProduct from "../../view/admin/update-product/index.js";
 
 const adminRoutes = [
     {
@@ -31,6 +32,10 @@ const adminRoutes = [
             {
                 path: "dashboard/product/add",
                 element: <AddProduct />
+            },
+            {
+                path: "dashboard/product/update/:id",
+                element: <UpdateProduct />
             },
             {
                 path: "dashboard/sales/create",

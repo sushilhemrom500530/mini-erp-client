@@ -1,11 +1,13 @@
-import { Table, Input, Select, Button, Space, Tooltip, ConfigProvider } from 'antd';
+import { Table, Input, Select, Button, Space, Tooltip, ConfigProvider, Modal, message, Descriptions } from 'antd';
 import { Plus, Search, Eye, Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { useGetProductsQuery } from '../../../redux/features/product/index.js';
+import { useDeleteProductMutation, useGetProductsQuery } from '../../../redux/features/product/index.js';
+import Loading from '../../../Components/reuseable/loading/index.js';
+import { Link } from 'react-router-dom';
 
 export default function ProductsContent() {
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(5);
+    const [limit, setLimit] = useState(10);
     const [searchTerm, setSearchTerm] = useState("");
     const [category, setCategory] = useState("");
 
@@ -15,9 +17,48 @@ export default function ProductsContent() {
         searchTerm,
         category,
     });
+    const [selectedProduct, setSelectedProduct] = useState<any>(null);
+    const [viewOpen, setViewOpen] = useState(false);
+
+    const [deleteProduct, { isLoading: deleting }] =
+        useDeleteProductMutation();
+
 
     const productData = data?.data?.results || [];
     const meta = data?.data?.meta;
+
+    if (isLoading) {
+        return <Loading title="Loading Products..." />
+    }
+
+    const handleView = (product: any) => {
+        setSelectedProduct(product);
+        setViewOpen(true);
+    };
+
+    const handleDelete = (id: string) => {
+        Modal.confirm({
+            title: "Delete Product",
+            content:
+                "Are you sure you want to delete this product? This action cannot be undone.",
+            okText: "Delete",
+            okType: "danger",
+            cancelText: "Cancel",
+            centered: true,
+
+            async onOk() {
+                try {
+                    const res = await deleteProduct(id).unwrap();
+
+                    message.success(res.message);
+                } catch (error: any) {
+                    message.error(
+                        error?.data?.message || "Failed to delete product."
+                    );
+                }
+            },
+        });
+    };
 
 
     const columns = [
@@ -73,25 +114,44 @@ export default function ProductsContent() {
         {
             title: 'Actions',
             key: 'actions',
-            render: () => (
+            render: (_: any, record: any) => (
                 <Space size="small">
                     <Tooltip title="View">
-                        <Button type="text" size="small" icon={<Eye className="w-4 h-4 text-blue-600" />} />
+                        <Button
+                            type="text"
+                            size="small"
+                            icon={<Eye className="w-4 h-4 text-blue-600" />}
+                            onClick={() => handleView(record)}
+                        />
                     </Tooltip>
-                    <Tooltip title="Edit">
-                        <Button type="text" size="small" icon={<Edit className="w-4 h-4 text-amber-600" />} />
-                    </Tooltip>
+
+                    <Link to={`/admin/dashboard/product/update/${record._id}`}>
+                        <Tooltip title="Edit">
+                            <Button
+                                type="text"
+                                size="small"
+                                icon={<Edit className="w-4 h-4 text-amber-600" />}
+                            />
+                        </Tooltip>
+                    </Link>
+
                     <Tooltip title="Delete">
-                        <Button type="text" size="small" icon={<Trash2 className="w-4 h-4 text-red-600" />} danger />
+                        <Button
+                            type="text"
+                            danger
+                            size="small"
+                            onClick={() => handleDelete(record._id)}
+                            icon={<Trash2 className="w-4 h-4 text-red-600" />}
+                        />
                     </Tooltip>
                 </Space>
             )
         }
     ];
 
+
     return (
         <>
-
             <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row gap-4 items-center justify-between">
                 <Input
                     placeholder="Search Product..."
@@ -128,8 +188,6 @@ export default function ProductsContent() {
                     />
                 </div>
             </div>
-
-
             <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
                 <ConfigProvider
                     theme={{
@@ -145,18 +203,84 @@ export default function ProductsContent() {
                     <Table
                         columns={columns}
                         dataSource={productData}
-                        rowKey="sku"
+                        rowKey="_id"
                         pagination={{
-                            pageSize: 5,
+                            current: meta?.currentPage ?? 1,
+                            pageSize: meta?.limit ?? 10,
+                            total: meta?.totalResult ?? 0,
                             showSizeChanger: true,
-                            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} products`,
-                            className: 'px-6 pt-4 pb-2'
+                            hideOnSinglePage: true,
+                            showTotal: (total, range) =>
+                                `${range[0]}-${range[1]} of ${total} products`,
+                            className: "px-6 pt-4 pb-2",
+                            onChange: (page, pageSize) => {
+                                setPage(page);
+                                setLimit(pageSize);
+                            },
                         }}
                         className="w-full"
-                        scroll={{ x: 'max-content' }}
+                        scroll={{ x: "max-content" }}
                     />
                 </ConfigProvider>
             </div>
+
+            <Modal
+                title="Product Details"
+                open={viewOpen}
+                footer={null}
+                onCancel={() => setViewOpen(false)}
+                width={700}
+            >
+                {selectedProduct && (
+                    <div className="space-y-6">
+
+                        <div className="flex justify-center">
+                            <img
+                                src={selectedProduct.productImage}
+                                alt={selectedProduct.productName}
+                                className='w-40 h-40 object-cover rounded-md'
+
+                            />
+                        </div>
+
+                        <Descriptions
+                            bordered
+                            column={1}
+                            size="middle"
+                        >
+                            <Descriptions.Item label="Product">
+                                {selectedProduct.productName}
+                            </Descriptions.Item>
+
+                            <Descriptions.Item label="SKU">
+                                {selectedProduct.sku}
+                            </Descriptions.Item>
+
+                            <Descriptions.Item label="Category">
+                                {selectedProduct.category}
+                            </Descriptions.Item>
+
+                            <Descriptions.Item label="Purchase Price">
+                                ${selectedProduct.purchasePrice}
+                            </Descriptions.Item>
+
+                            <Descriptions.Item label="Selling Price">
+                                ${selectedProduct.sellingPrice}
+                            </Descriptions.Item>
+
+                            <Descriptions.Item label="Stock">
+                                {selectedProduct.stockQuantity}
+                            </Descriptions.Item>
+
+                            <Descriptions.Item label="Created At">
+                                {new Date(
+                                    selectedProduct.createdAt
+                                ).toLocaleString()}
+                            </Descriptions.Item>
+                        </Descriptions>
+                    </div>
+                )}
+            </Modal>
         </>
     )
 }

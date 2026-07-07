@@ -62,6 +62,8 @@ export interface FormFieldProps {
     accept?: string;
     rows?: number;
     fileUploadClass?: string;
+    /** Default image to show in file dragger (when no file is selected) */
+    defaultImage?: string | null | undefined;
 }
 
 // Normalize the Upload event into the file list antd Form expects
@@ -109,6 +111,43 @@ const FileLineInput: React.FC<FileLineInputProps> = ({
     );
 };
 
+const FileDraggerWrapper = ({ fileList, onChange, draggerName, multiple, accept, fileUploadClass, defaultImage, ...rest }: any) => {
+    const hasFiles = Array.isArray(fileList) && fileList.length > 0;
+
+    return (
+        <Dragger
+            name={draggerName}
+            multiple={multiple}
+            {...(multiple ? {} : { maxCount: 1 })}
+            accept={accept as any}
+            beforeUpload={() => false}
+            listType="picture"
+            className="!h-[360px]"
+            rootClassName={fileUploadClass}
+            fileList={fileList}
+            onChange={onChange}
+            {...rest}
+        >
+            {defaultImage && !hasFiles ? (
+                <div className="flex flex-col items-center justify-center h-full min-h-[300px] p-4 text-center">
+                    <img src={defaultImage} alt="Preview" className="max-h-[250px] max-w-full object-contain mb-4 rounded-lg mx-auto" />
+                    <p className="ant-upload-text text-sm">Click or drag new image to replace</p>
+                </div>
+            ) : (
+                <>
+                    <p className="flex justify-center">
+                        <UploadCloud className="h-6 w-6 text-gray-400" />
+                    </p>
+                    <p className="ant-upload-text">
+                        Click to upload or Drag &amp; drop or{" "}
+                    </p>
+                    <p className="ant-upload-hint">PDF, JPG, PNG - max 10 MB each</p>
+                </>
+            )}
+        </Dragger>
+    );
+};
+
 const FormField: React.FC<FormFieldProps> = ({
     type = "text",
     name,
@@ -125,6 +164,7 @@ const FormField: React.FC<FormFieldProps> = ({
     accept,
     rows = 4,
     fileUploadClass = "",
+    defaultImage,
 }) => {
     const mergedRules: Rule[] = [
         ...rules,

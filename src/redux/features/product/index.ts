@@ -3,21 +3,23 @@ import type { IProductListResponse, IProductQuery, IProductResponse } from "./in
 
 export const productApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-
         getProducts: builder.query<IProductListResponse, IProductQuery>({
-            query: ({ page = 1, limit = 10, searchTerm = "", category = "" }) => ({
-                url: "/product/get-all",
-                method: "GET",
-                params: {
-                    page,
-                    limit,
-                    searchTerm,
-                    category,
-                },
-            }),
+            query: ({ page, limit, searchTerm, category }) => {
+                const params: Record<string, string | number> = {};
+
+                if (page) params.page = page;
+                if (limit) params.limit = limit;
+                if (searchTerm?.trim()) params.searchTerm = searchTerm.trim();
+                if (category?.trim()) params.category = category.trim();
+
+                return {
+                    url: "/product/get-all",
+                    method: "GET",
+                    params,
+                };
+            },
             providesTags: ["product"],
         }),
-
 
         getProduct: builder.query<IProductResponse, string>({
             query: (id) => ({
