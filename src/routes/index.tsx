@@ -3,8 +3,9 @@ import MainLayout from "../layout/main/index.js";
 import Index from "../view/error-page/index.js";
 import authRoutes from "./auth/index.js";
 import adminRoutes from './admin/index.jsx';
-import userRoutes from './employee/index.js';
 import HomePage from "../view/home/index.js";
+import employeeRoutes from "./employee/index.js";
+import managerRoutes from "./manager/index.js";
 
 const routes = [
     // common home page route 
@@ -25,7 +26,8 @@ const routes = [
     },
     ...authRoutes,
     ...adminRoutes,
-    ...userRoutes,
+    ...employeeRoutes,
+    ...managerRoutes,
 ]
 
 const router = createBrowserRouter(

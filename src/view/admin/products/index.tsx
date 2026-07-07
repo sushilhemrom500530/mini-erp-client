@@ -12,7 +12,7 @@ export default function Products() {
                 title="Products"
                 subtitle="Manage your inventory products"
             >
-                <Link to='/admin/dashboard/product/add' >
+                <Link to='/manager/dashboard/product/add' >
                     <Button type="primary" className="!bg-secondary hover:!bg-secondary/90 h-10 px-4 font-medium flex items-center gap-2">
                         <Plus className="w-5 h-5" />
                         Add Product

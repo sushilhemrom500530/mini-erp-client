@@ -1,5 +1,4 @@
 import { Navigate } from "react-router-dom";
-import Index from "../../layout/main/index.js";
 import PrivateRoute from "../private/index.js";
 import DashboardLayout from "../../layout/dashboard/index.js";
 import Dashboard from "../../view/admin/dashboard/index.js";
@@ -7,7 +6,7 @@ import Products from "../../view/admin/products/index.js";
 import Profile from "../../view/admin/profile/index.js";
 import CreateSales from "../../view/admin/create-sales/index.js";
 
-const userRoutes = [
+const employeeRoutes = [
     {
         path: "/employee/",
         element: (
@@ -41,4 +40,4 @@ const userRoutes = [
     }
 ]
 
-export default userRoutes;
+export default employeeRoutes;
