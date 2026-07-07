@@ -44,7 +44,7 @@ export const sidebarMenus = {
     },
     {
       label: "Add Product",
-      href: "/admin/dashboard/products/add",
+      href: "/admin/dashboard/product/add",
       icon: PackagePlus,
     },
     {
@@ -72,7 +72,7 @@ export const sidebarMenus = {
     },
     {
       label: "Add Product",
-      href: "/manager/dashboard/products/add",
+      href: "/manager/dashboard/product/add",
       icon: PackagePlus,
     },
     {

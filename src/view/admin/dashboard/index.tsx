@@ -1,9 +1,18 @@
-import React from 'react';
+import {
+    Package,
+    DollarSign,
+    TriangleAlert,
+    ShoppingCart,
+    TrendingUp,
+} from "lucide-react";
 import { SalesSummary, StatCard } from '../../../Components/reuseable/common-card/index.js';
 
 const LowStockTable = () => (
-    <div className="rounded-xl  border border-slate-200 bg-white p-6 h-full">
-        <h2 className="text-xl font-bold mb-4 flex items-center gap-2">📦 Low Stock Products</h2>
+    <div className="rounded-xl border border-slate-200 bg-white p-6 h-full">
+        <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <ShoppingCart className="w-6 h-6 text-red-600" />
+            Low Stock Products
+        </h2>
         <div className="overflow-x-auto">
             <table className="w-full text-left text-sm text-gray-500">
                 <thead className="bg-gray-50 text-xs uppercase text-gray-700 rounded-lg">
@@ -15,13 +24,13 @@ const LowStockTable = () => (
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <tr className="border-b border-b-slate-200 hover:bg-gray-50 transition-colors">
                         <td className="px-4 py-4 font-medium text-gray-900">Napa 500mg</td>
                         <td className="px-4 py-4">Medicine</td>
                         <td className="px-4 py-4">20</td>
                         <td className="px-4 py-4 text-red-600 font-bold">5</td>
                     </tr>
-                    <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <tr className="border-b border-b-slate-200 hover:bg-gray-50 transition-colors">
                         <td className="px-4 py-4 font-medium text-gray-900">Savlon Antiseptic</td>
                         <td className="px-4 py-4">First Aid</td>
                         <td className="px-4 py-4">15</td>
@@ -70,9 +79,23 @@ export default function Dashboard() {
 
                 {/* Stats */}
                 <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                    <StatCard title="Products" amount='350' icon="📦" />
-                    <StatCard title="Sales" amount='210' icon="💰" />
-                    <StatCard title="Low Stock" amount='65' icon="⚠️" />
+                    <StatCard
+                        title="Products"
+                        amount="350"
+                        icon={<Package className="w-6 h-6 text-blue-600" />}
+                    />
+
+                    <StatCard
+                        title="Sales"
+                        amount="210"
+                        icon={<DollarSign className="w-6 h-6 text-green-600" />}
+                    />
+
+                    <StatCard
+                        title="Low Stock"
+                        amount="65"
+                        icon={<TriangleAlert className="w-6 h-6 text-orange-500" />}
+                    />
                 </div>
 
                 {/* Tables */}
