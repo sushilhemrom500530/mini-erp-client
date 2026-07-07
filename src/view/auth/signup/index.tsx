@@ -1,73 +1,48 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { FcGoogle } from 'react-icons/fc'
-import { useForm } from "react-hook-form";
-import { Button, Form, message } from 'antd';
-import FormField from '../../../Components/form/index.js';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FcGoogle } from 'react-icons/fc';
+import { Button, Form, Input, Select, message } from 'antd';
 import { FaLock, FaUser } from 'react-icons/fa';
 import { MdMail } from 'react-icons/md';
 import type { IRegisterRequest } from '../../../types/user/index.js';
 import { useRegisterMutation } from '../../../redux/features/user/index.js';
-import { useDispatch } from 'react-redux';
-import { setCredentials } from '../../../redux/userSlice.js';
-import type { AppDispatch } from '../../../redux/store.js';
+import Cookies from 'js-cookie';
 
 export default function SignUp() {
     const location = useLocation();
     const navigate = useNavigate();
     const [form] = Form.useForm();
-    const from = location.state?.from?.pathname || "/dashboard";
-
-    const dispatch = useDispatch<AppDispatch>();
 
     const [registerUser, { isLoading }] = useRegisterMutation();
 
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-    } = useForm<IRegisterRequest>({
-        defaultValues: {
-            role: "employee",
-        },
-    });
-
-    const onSubmit = async (data: IRegisterRequest) => {
+    const onSubmit = async (values: IRegisterRequest) => {
         try {
-            const res = await registerUser(data).unwrap();
+            const res = await registerUser(values).unwrap();
 
-            /**
-             * Only dispatch credentials if your backend
-             * returns user information after registration.
-             *
-             * Otherwise remove this block.
-             */
-            if (res.data?.user && res.data?.token) {
-                dispatch(
-                    setCredentials({
-                        user: res.data.user,
-                        token: res.data.token,
-                    })
-                );
+            if (res.data?.token) {
+                Cookies.set("token", res.data.token, {
+                    expires: 1,
+                    secure: import.meta.env.PROD,
+                    sameSite: "Lax",
+                });
             }
 
-            message.success(res.message);
+            message.success(res.message || "Registration successful!");
 
-            navigate(from, {
+            // Automatically pass email state to the OTP page
+            navigate("/auth/email-verification", {
                 replace: true,
+                state: { email: values.email }
             });
         } catch (error: any) {
             message.error(
-                error?.data?.message ||
-                "Registration failed. Please try again."
+                error?.data?.message || "Registration failed. Please try again."
             );
         }
     };
 
-    const handleGoogleSignIn = () => {
+    const handleGoogleLogin = () => {
         window.location.href = `${import.meta.env.VITE_PUBLIC_URL}/auth/google`;
     };
-
 
     return (
         <div
@@ -85,7 +60,6 @@ export default function SignUp() {
                     <h1 className="mb-3 text-4xl font-bold text-white">
                         Create Account
                     </h1>
-
                     <p className="text-gray-300">
                         Fill in your details below to create your account.
                     </p>
@@ -96,84 +70,88 @@ export default function SignUp() {
                     layout="vertical"
                     onFinish={onSubmit}
                     autoComplete="off"
+                    requiredMark={false}
+                    initialValues={{ role: "employee" }}
                 >
                     <div className="space-y-4">
 
-                        {/* Full Name */}
-                        <div>
-                            <label className="mb-2 block text-sm font-medium text-white">
-                                Full Name
-                            </label>
-
-                            <FormField
-                                name="fullName"
-                                type="text"
+                        {/* Full Name Field */}
+                        <Form.Item
+                            name="fullName"
+                            label={<span className="text-sm font-medium text-white">Full Name</span>}
+                            rules={[{ required: true, message: "Please enter your full name." }]}
+                        >
+                            <Input
                                 placeholder="Enter your full name"
-                                icon={<FaUser className="mr-2 text-gray-500" />}
-                                required
+                                size="large"
+                                prefix={<FaUser className="mr-2 text-gray-400" />}
+                                className="!bg-white/10 !text-white hover:border-white/30 focus:border-white/50"
+                                classNames={{ input: 'placeholder:!text-white/60' }}
                             />
-                        </div>
+                        </Form.Item>
 
-                        {/* Email */}
-                        <div>
-                            <label className="mb-2 block text-sm font-medium text-white">
-                                Email
-                            </label>
-
-                            <FormField
-                                name="email"
+                        {/* Email Field */}
+                        <Form.Item
+                            name="email"
+                            label={<span className="text-sm font-medium text-white">Email</span>}
+                            rules={[
+                                { required: true, message: "Please enter your email." },
+                                { type: "email", message: "Enter a valid email address." }
+                            ]}
+                        >
+                            <Input
                                 type="email"
                                 placeholder="Enter your email"
-                                icon={<MdMail className="mr-2 text-gray-500" />}
-                                required
-                                rules={[
-                                    {
-                                        type: "email",
-                                        message: "Enter a valid email address.",
-                                    },
-                                ]}
+                                size="large"
+                                prefix={<MdMail className="mr-2 text-gray-400" />}
+                                className="!bg-white/10 !text-white hover:border-white/30 focus:border-white/50"
+                                classNames={{ input: 'placeholder:!text-white/60' }}
                             />
-                        </div>
+                        </Form.Item>
 
-                        {/* Password */}
-                        <div>
-                            <label className="mb-2 block text-sm font-medium text-white">
-                                Password
-                            </label>
-
-                            <FormField
-                                name="password"
-                                type="password"
+                        {/* Password Field */}
+                        <Form.Item
+                            name="password"
+                            label={<span className="text-sm font-medium text-white">Password</span>}
+                            rules={[
+                                { required: true, message: "Please enter your password." },
+                                { min: 6, message: "Password must be at least 6 characters." }
+                            ]}
+                        >
+                            <Input.Password
                                 placeholder="Enter your password"
-                                icon={<FaLock className="mr-2 text-gray-500" />}
-                                required
-                                rules={[
+                                size="large"
+                                prefix={<FaLock className="mr-2 text-gray-400" />}
+                                className="!bg-white/10 !text-white hover:border-white/30 focus:border-white/50"
+                                classNames={{ input: 'placeholder:!text-white/60' }}
+                            />
+                        </Form.Item>
+
+                        {/* Role Select Field */}
+                        <Form.Item
+                            name="role"
+                            label={<span className="text-sm font-medium text-white">Role</span>}
+                            rules={[{ required: true, message: "Please select a role." }]}
+                        >
+                            <Select
+                                size="large"
+                                placeholder="Select your role"
+                                suffixIcon={<span className="text-white/60">▼</span>}
+                                options={[
                                     {
-                                        min: 6,
-                                        message: "Password must be at least 6 characters.",
+                                        value: "manager",
+                                        label: <span className="text-black">Manager</span>
+                                    },
+                                    {
+                                        value: "employee",
+                                        label: <span className="text-black">Employee</span>
                                     },
                                 ]}
+                                classNames={{ input: 'placeholder:!text-white/60' }}
+                                className="!bg-white/10 !text-white hover:border-white/30 focus:border-white/50"
+                                style={{ height: 40 }}
                             />
-                        </div>
-
-                        {/* Role */}
-                        <div>
-                            <label className="mb-2 block text-sm font-medium text-white">
-                                Role
-                            </label>
-                            <FormField
-                                name="role"
-                                type="select"
-                                placeholder="Select your role"
-                                icon={<FaLock className="mr-2 text-gray-500" />}
-                                required
-                                options={[
-                                    { value: "admin", label: "Admin" },
-                                    { value: "manager", label: "Manager" },
-                                    { value: "employee", label: "Employee" },
-                                ]}
-                            />
-                        </div>
+                        </Form.Item>
                     </div>
 
                     <Button
@@ -188,16 +166,13 @@ export default function SignUp() {
 
                     <div className="relative my-6 flex items-center">
                         <div className="flex-1 border-t border-white/20"></div>
-
-                        <span className="mx-4 text-sm text-gray-300">
-                            Or
-                        </span>
-
+                        <span className="mx-4 text-sm text-gray-300">Or</span>
                         <div className="flex-1 border-t border-white/20"></div>
                     </div>
 
                     <button
                         type="button"
+                        onClick={handleGoogleLogin}
                         className="flex w-full cursor-pointer items-center justify-center gap-3 rounded-xl border border-white/20 py-3 text-white transition hover:bg-secondary/10"
                     >
                         <FcGoogle size={22} />
@@ -214,8 +189,7 @@ export default function SignUp() {
                         </Link>
                     </div>
                 </Form>
-            </div >
-        </div >
-    )
+            </div>
+        </div>
+    );
 }
-

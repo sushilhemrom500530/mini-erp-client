@@ -2,18 +2,24 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Form, message } from "antd";
 import { MailCheck } from "lucide-react";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../../redux/store.js";
+import { useVerifyOtpMutation } from "../../../redux/features/user/index.js";
+import { setCredentials } from "../../../redux/userSlice.js";
+import Cookies from "js-cookie";
 
 export default function EmailVerification() {
     const location = useLocation();
     const navigate = useNavigate();
     const [form] = Form.useForm();
+    const dispatch = useDispatch<AppDispatch>();
 
     const targetEmail = location.state?.email || "your email address";
 
     const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
     const [countdown, setCountdown] = useState<number>(59);
     const [canResend, setCanResend] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [verifyEmailOtp, { isLoading }] = useVerifyOtpMutation();
     const inputRefs = useRef<HTMLInputElement[]>([]);
 
 
@@ -73,17 +79,36 @@ export default function EmailVerification() {
         }
 
         try {
-            setIsLoading(true);
+            const res = await verifyEmailOtp({ otp: fullOtp }).unwrap();
 
-            // Your API mutation call goes here. Example:
-            // const res = await verifyEmailOtp({ email: targetEmail, code: fullOtp }).unwrap();
+            Cookies.set("token", res.data.token, {
+                expires: 7, // 7 days
+                secure: import.meta.env.PROD,
+                sameSite: "Lax",
+            });
+            localStorage.setItem("user", JSON.stringify(res.data.results));
+            dispatch(
+                setCredentials({
+                    user: res.data.results,
+                    token: res.data.token,
+                })
+            );
 
-            message.success("Email verified successfully!");
-            navigate("/auth/login");
+            message.success(res.message || "Email verified successfully! Login to continue.");
+
+            const role = res.data.results.role;
+            if (role === "admin") {
+                navigate("/admin", { replace: true });
+            } else if (role === "manager") {
+                navigate("/manager", { replace: true });
+            } else if (role === "employee") {
+                navigate("/employee", { replace: true });
+            } else {
+                navigate("/", { replace: true });
+            }
+
         } catch (error: any) {
             message.error(error?.data?.message || "Invalid OTP code. Please try again.");
-        } finally {
-            setIsLoading(false);
         }
     };
 
