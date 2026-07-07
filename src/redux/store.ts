@@ -4,7 +4,7 @@ import userReducer from './userSlice.js'
 
 export const store = configureStore({
     reducer: {
-        users: userReducer,
+        auth: userReducer,
         [baseApi.reducerPath]: baseApi.reducer,
 
     },

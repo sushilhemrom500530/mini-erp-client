@@ -1,10 +1,15 @@
 import { Navigate } from "react-router-dom";
 import Index from "../../layout/main/index.js";
+import PrivateRoute from "../private/index.js";
 
 const userRoutes = [
     {
         path: "/user/",
-        element: <Index />,
+        element: (
+            <PrivateRoute allowedRoles={["employee"]}>
+                <Index />
+            </PrivateRoute>
+        ),
         children: [
             {
                 path: "",

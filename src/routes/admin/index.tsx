@@ -5,11 +5,16 @@ import Products from "../../view/admin/products/index.js";
 import AddProduct from "../../view/admin/add-product/index.js";
 import CreateSales from "../../view/admin/create-sales/index.js";
 import Profile from "../../view/admin/profile/index.js";
+import PrivateRoute from "../private/index.js";
 
 const adminRoutes = [
     {
         path: "/admin/",
-        element: <DashboardLayout />,
+        element: (
+            <PrivateRoute allowedRoles={["admin"]}>
+                <DashboardLayout />
+            </PrivateRoute>
+        ),
         children: [
             {
                 path: "",
