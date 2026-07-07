@@ -8,6 +8,7 @@ import {
 import { SalesSummary, StatCard } from '../../../Components/reuseable/common-card/index.js';
 import { useGetAdminStatsQuery } from "../../../redux/features/dashboard/index.js";
 import LowStockTable from "../../../Components/dashboard/low-stock-table/index.js";
+import Loading from "../../../Components/reuseable/loading/index.js";
 
 
 export default function Dashboard() {
@@ -16,7 +17,7 @@ export default function Dashboard() {
     const stats = data?.data;
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loading title="Loading Dashboard..." />;
     }
 
     if (error) {

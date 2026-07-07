@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useDeleteProductMutation, useGetProductsQuery } from '../../../redux/features/product/index.js';
 import Loading from '../../../Components/reuseable/loading/index.js';
 import { Link } from 'react-router-dom';
+import ProductDetails from './view/index.js';
 
 export default function ProductsContent() {
     const [page, setPage] = useState(1);
@@ -232,53 +233,7 @@ export default function ProductsContent() {
                 width={700}
             >
                 {selectedProduct && (
-                    <div className="space-y-6">
-
-                        <div className="flex justify-center">
-                            <img
-                                src={selectedProduct.productImage}
-                                alt={selectedProduct.productName}
-                                className='w-40 h-40 object-cover rounded-md'
-
-                            />
-                        </div>
-
-                        <Descriptions
-                            bordered
-                            column={1}
-                            size="middle"
-                        >
-                            <Descriptions.Item label="Product">
-                                {selectedProduct.productName}
-                            </Descriptions.Item>
-
-                            <Descriptions.Item label="SKU">
-                                {selectedProduct.sku}
-                            </Descriptions.Item>
-
-                            <Descriptions.Item label="Category">
-                                {selectedProduct.category}
-                            </Descriptions.Item>
-
-                            <Descriptions.Item label="Purchase Price">
-                                ${selectedProduct.purchasePrice}
-                            </Descriptions.Item>
-
-                            <Descriptions.Item label="Selling Price">
-                                ${selectedProduct.sellingPrice}
-                            </Descriptions.Item>
-
-                            <Descriptions.Item label="Stock">
-                                {selectedProduct.stockQuantity}
-                            </Descriptions.Item>
-
-                            <Descriptions.Item label="Created At">
-                                {new Date(
-                                    selectedProduct.createdAt
-                                ).toLocaleString()}
-                            </Descriptions.Item>
-                        </Descriptions>
-                    </div>
+                    <ProductDetails selectedProduct={selectedProduct} />
                 )}
             </Modal>
         </>
