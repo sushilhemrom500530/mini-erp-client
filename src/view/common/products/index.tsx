@@ -188,7 +188,7 @@ export default function ProductsContent() {
     return (
         <>
 
-            <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col sm:flex-row gap-4 items-center justify-between">
+            <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row gap-4 items-center justify-between">
                 <Input
                     placeholder="Search Product..."
                     prefix={<Search className="w-4 h-4 text-gray-400" />}
@@ -220,7 +220,7 @@ export default function ProductsContent() {
             </div>
 
 
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
                 <ConfigProvider
                     theme={{
                         components: {

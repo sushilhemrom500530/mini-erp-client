@@ -24,7 +24,7 @@ export default function AddProductContent() {
 
                 {/* Left Column - Image Upload */}
                 <div className="lg:col-span-1">
-                    <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm h-full flex flex-col">
+                    <div className="bg-white p-6 rounded-xl border border-slate-200 h-full flex flex-col">
                         <h2 className="text-lg font-semibold text-gray-900 mb-4">Product Image</h2>
                         <div className="flex-1">
                             <FormField
@@ -39,7 +39,7 @@ export default function AddProductContent() {
 
                 {/* Right Column - Product Information */}
                 <div className="lg:col-span-2">
-                    <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <div className="bg-white p-6 rounded-xl border border-slate-200">
                         <h2 className="text-lg font-semibold text-gray-900 mb-4">Product Information</h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
@@ -63,18 +63,12 @@ export default function AddProductContent() {
                             />
 
                             <FormField
-                                type="select"
+                                type="text"
                                 label="Category"
                                 name="category"
                                 required
-                                placeholder="Select category"
+                                placeholder="E.g. Electronics"
                                 colorClass="rounded-lg"
-                                options={[
-                                    { value: 'electronics', label: 'Electronics' },
-                                    { value: 'smartphones', label: 'Smartphones' },
-                                    { value: 'laptops', label: 'Laptops' },
-                                    { value: 'accessories', label: 'Accessories' }
-                                ]}
                             />
 
                             <FormField
@@ -123,7 +117,7 @@ export default function AddProductContent() {
                     type="primary"
                     htmlType="submit"
                     size="large"
-                    className="px-6 !bg-secondary hover:!bg-secondary/80 font-medium shadow-sm transition-colors"
+                    className="px-6 !bg-secondary hover:!bg-secondary/80 font-medium transition-colors"
                 >
                     Save Product
                 </Button>

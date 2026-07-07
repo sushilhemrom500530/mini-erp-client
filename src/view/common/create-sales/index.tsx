@@ -57,10 +57,10 @@ export default function CreateSalesContent() {
             initialValues={{ products: [{}] }}
             className="flex flex-col gap-6"
         >
-            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm overflow-x-auto w-full">
+            <div className="bg-white p-6 rounded-xl border border-slate-200 overflow-x-auto w-full">
 
                 <div className="min-w-[700px]">
-                    <div className="grid grid-cols-12 gap-4 pb-3 border-b border-gray-200 text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+                    <div className="grid grid-cols-12 gap-4 pb-3 border-b border-slate-200 text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
                         <div className="col-span-12 sm:col-span-5">Product</div>
                         <div className="col-span-4 sm:col-span-2 text-center">Qty</div>
                         <div className="col-span-4 sm:col-span-2 text-right">Price</div>
@@ -164,8 +164,8 @@ export default function CreateSalesContent() {
 
             {/* Bottom Summary Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start mt-2">
-                <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden lg:col-start-2">
-                    <div className="grid grid-cols-2 bg-gray-50 border-b border-gray-200">
+                <div className="bg-white rounded-xl border border-slate-200 overflow-hidden lg:col-start-2">
+                    <div className="grid grid-cols-2 bg-gray-50 border-b border-slate-200">
                         <div className="p-4 font-semibold text-gray-900">Sales Summary</div>
                         <div className="p-4 font-semibold text-gray-900 text-right">Grand Total</div>
                     </div>
