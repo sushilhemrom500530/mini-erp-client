@@ -6,50 +6,23 @@ import {
     TrendingUp,
 } from "lucide-react";
 import { SalesSummary, StatCard } from '../../../Components/reuseable/common-card/index.js';
-
-const LowStockTable = () => (
-    <div className="rounded-xl border border-slate-200 bg-white p-6 h-full">
-        <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <ShoppingCart className="w-6 h-6 text-red-600" />
-            Low Stock Products
-        </h2>
-        <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-gray-500">
-                <thead className="bg-gray-50 text-xs uppercase text-gray-700 rounded-lg">
-                    <tr>
-                        <th className="px-4 py-3 rounded-l-lg">Product Name</th>
-                        <th className="px-4 py-3">Category</th>
-                        <th className="px-4 py-3">Stock Limit</th>
-                        <th className="px-4 py-3">Current Stock</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr className="border-b border-b-slate-200 hover:bg-gray-50 transition-colors">
-                        <td className="px-4 py-4 font-medium text-gray-900">Napa 500mg</td>
-                        <td className="px-4 py-4">Medicine</td>
-                        <td className="px-4 py-4">20</td>
-                        <td className="px-4 py-4 text-red-600 font-bold">5</td>
-                    </tr>
-                    <tr className="border-b border-b-slate-200 hover:bg-gray-50 transition-colors">
-                        <td className="px-4 py-4 font-medium text-gray-900">Savlon Antiseptic</td>
-                        <td className="px-4 py-4">First Aid</td>
-                        <td className="px-4 py-4">15</td>
-                        <td className="px-4 py-4 text-orange-500 font-bold">12</td>
-                    </tr>
-                    <tr className="hover:bg-gray-50 transition-colors">
-                        <td className="px-4 py-4 font-medium text-gray-900">Surgical Mask Box</td>
-                        <td className="px-4 py-4">Equipment</td>
-                        <td className="px-4 py-4">50</td>
-                        <td className="px-4 py-4 text-red-600 font-bold">10</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-);
+import { useGetAdminStatsQuery } from "../../../redux/features/dashboard/index.js";
+import LowStockTable from "../../../Components/dashboard/low-stock-table/index.js";
 
 
 export default function Dashboard() {
+    const { data, isLoading, error } = useGetAdminStatsQuery();
+
+    const stats = data?.data;
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Something went wrong.</div>;
+    }
+
     return (
         <div>
             <div className="space-y-8">
@@ -81,19 +54,19 @@ export default function Dashboard() {
                 <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                     <StatCard
                         title="Products"
-                        amount="350"
+                        amount={stats?.totalProducts ?? 0}
                         icon={<Package className="w-6 h-6 text-blue-600" />}
                     />
 
                     <StatCard
                         title="Sales"
-                        amount="210"
+                        amount={stats?.totalSales ?? 0}
                         icon={<DollarSign className="w-6 h-6 text-green-600" />}
                     />
 
                     <StatCard
                         title="Low Stock"
-                        amount="65"
+                        amount={stats?.lowStockProducts ?? 0}
                         icon={<TriangleAlert className="w-6 h-6 text-orange-500" />}
                     />
                 </div>
@@ -101,12 +74,13 @@ export default function Dashboard() {
                 {/* Tables */}
                 <div className="grid gap-6 xl:grid-cols-3">
                     <div className="xl:col-span-2">
-                        <LowStockTable />
+                        <LowStockTable products={stats?.recentProducts || []} />
                     </div>
-                    <SalesSummary />
+
+                    <SalesSummary totalRevenue={stats?.totalRevenue ?? 0} />
                 </div>
 
             </div>
         </div>
-    )
+    );
 }

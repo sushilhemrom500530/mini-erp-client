@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../../redux/store.js";
 import { useLoginMutation } from "../../../redux/features/user/index.js";
 import { setCredentials } from "../../../redux/userSlice.js";
+import Cookies from "js-cookie";
+
 
 interface LoginFormValues {
     email: string;
@@ -27,6 +29,11 @@ export default function Login() {
         try {
             const res = await login(values).unwrap();
 
+            Cookies.set("token", res.data.token, {
+                expires: 7, // 7 days
+                secure: import.meta.env.PROD,
+                sameSite: "Lax",
+            });
             dispatch(
                 setCredentials({
                     user: res.data.results,
