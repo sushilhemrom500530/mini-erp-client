@@ -21,12 +21,9 @@ export default function AddProductContent() {
             formData.append("stockQuantity", String(values.stockQuantity));
 
             // Upload file
-            if (values.productImage) {
-                const file =
-                    Array.isArray(values.productImage)
-                        ? values.productImage[0]
-                        : values.productImage;
+            const file = values.productImage?.[0]?.originFileObj;
 
+            if (file) {
                 formData.append("productImage", file);
             }
 
@@ -59,7 +56,8 @@ export default function AddProductContent() {
                         <div className="flex-1">
                             <FormField
                                 type="file"
-                                name="image"
+                                name="productImage"
+                                required
                                 accept=".png,.jpg,.jpeg"
                                 fileUploadClass="!h-64 bg-gray-50 hover:border-blue-500 hover:bg-blue-50/50 transition-all border-dashed rounded-xl"
                             />
@@ -144,6 +142,7 @@ export default function AddProductContent() {
                     Cancel
                 </Button>
                 <Button
+                    loading={isLoading}
                     type="primary"
                     htmlType="submit"
                     size="large"
