@@ -1,4 +1,4 @@
-import type { ILoginRequest, ILoginResponse, IRegisterRequest } from "../../../types/user/index.js";
+import type { ILoginRequest, ILoginResponse, IRegisterRequest, IUser } from "../../../types/user/index.js";
 import { baseApi } from "../../api/index.js";
 
 export const authApi = baseApi.injectEndpoints({
@@ -76,6 +76,13 @@ export const authApi = baseApi.injectEndpoints({
                 method: "POST",
             }),
         }),
+        getMyProfile: builder.query<IUser, void>({
+            query: () => ({
+                url: "/user/get-my-profile",
+                method: "GET",
+            }),
+            providesTags: ["user"],
+        }),
     }),
 });
 
@@ -89,4 +96,5 @@ export const {
     useResetPasswordMutation,
     useChangePasswordMutation,
     useRefreshTokenMutation,
+    useGetMyProfileQuery,
 } = authApi;
