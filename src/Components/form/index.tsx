@@ -126,12 +126,13 @@ const FileDraggerWrapper = ({ fileList, onChange, draggerName, multiple, accept,
             rootClassName={fileUploadClass}
             fileList={fileList}
             onChange={onChange}
+            showUploadList={!defaultImage} // Hide standard antd list if we are taking over preview rendering
             {...rest}
         >
-            {defaultImage && !hasFiles ? (
-                <div className="flex flex-col items-center justify-center h-full min-h-[300px] p-4 text-center">
-                    <img src={defaultImage} alt="Preview" className="max-h-[250px] max-w-full object-contain mb-4 rounded-lg mx-auto" />
-                    <p className="ant-upload-text text-sm">Click or drag new image to replace</p>
+            {defaultImage ? (
+                <div className="flex flex-col items-center justify-center p-4">
+                    <img src={defaultImage} alt="Preview" className="max-h-[250px] object-cover mb-4 rounded-lg" />
+                    <p className="ant-upload-text">Click or drag new image to replace</p>
                 </div>
             ) : (
                 <>

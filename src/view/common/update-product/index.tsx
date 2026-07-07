@@ -15,6 +15,18 @@ export default function UpdateProductContent({ id }: { id: string }) {
 
     const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
+    const productImageData = Form.useWatch('productImage', form);
+
+    useEffect(() => {
+        if (productImageData && productImageData.length > 0) {
+            const file = productImageData[0].originFileObj;
+            if (file) {
+                setPreviewImage(URL.createObjectURL(file));
+            }
+        }
+        // Cleanup URL object if needed (optional for this context)
+    }, [productImageData]);
+
     useEffect(() => {
         if (data?.data) {
             form.setFieldsValue({
@@ -85,7 +97,7 @@ export default function UpdateProductContent({ id }: { id: string }) {
                             <FormField
                                 type="file"
                                 name="productImage"
-                                defaultImage={data?.data?.productImage}
+                                defaultImage={previewImage}
                             />
                         </div>
                     </div>
